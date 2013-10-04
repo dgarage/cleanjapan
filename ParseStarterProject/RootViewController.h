@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface RootViewController : UIViewController{
+#import <MapKit/MapKit.h>
+@interface RootViewController : UIViewController<MKMapViewDelegate, CLLocationManagerDelegate>{
     IBOutlet UILabel *testLabel;
     IBOutlet UIButton *testButton;
     IBOutlet UITextField *testTextField;
+    //map
+    IBOutlet MKMapView *mapView;
+    CLLocationManager *locationManager;
 }
 
 -(IBAction)bentatsu;
