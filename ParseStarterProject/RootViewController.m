@@ -56,8 +56,21 @@
 }
 
 - (IBAction)bentatsu{
-    //image picker
-    [self showCameraSheet];
+    //post
+    NSLog(@"posting data to perse.com.....");
+    CLLocation *location = [locationManager location];
+    //    NSLog(@"LAT:%f LON:%f", location.coordinate.latitude, location.coordinate.longitude);
+    //UIGraphicsEndImageContext();
+    NSData *imageData = UIImageJPEGRepresentation(buttonImage, 0.0f);//0が最高圧縮, 1が最低圧縮
+    
+    PFFile *imageFile = [PFFile fileWithName:@"Image.jpg" data:imageData];
+    PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
+    [testObject setObject:imageFile forKey:@"image"];
+    [testObject setObject:testTextField.text forKey:@"comment"];
+    [testObject setObject:[NSString stringWithFormat:@"%f", location.coordinate.latitude] forKey:@"latitude"];
+    [testObject setObject:[NSString stringWithFormat:@"%f", location.coordinate.longitude] forKey:@"longitude"];
+    [testObject save];
+    NSLog(@"done!");
 }
 
 - (IBAction)showCameraSheet
@@ -116,30 +129,20 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 {
     // イメージピッカーを隠す
     [self dismissViewControllerAnimated:YES completion:nil];
-    //post
-    NSLog(@"posting data to perse.com.....");
-    CLLocation *location = [locationManager location];
-    //    NSLog(@"LAT:%f LON:%f", location.coordinate.latitude, location.coordinate.longitude);
-    //UIGraphicsEndImageContext();
-    NSData *imageData = UIImageJPEGRepresentation(image, 0.0f);//0が最高圧縮, 1が最低圧縮
-    
-    PFFile *imageFile = [PFFile fileWithName:@"Image.jpg" data:imageData];
-    PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
-    [testObject setObject:testLabel.text forKey:@"foo"];
-    [testObject setObject:imageFile forKey:@"img"];
-    [testObject setObject:testTextField.text forKey:@"comment"];
-    [testObject setObject:[NSString stringWithFormat:@"%f", location.coordinate.latitude] forKey:@"latitude"];
-    [testObject setObject:[NSString stringWithFormat:@"%f", location.coordinate.longitude] forKey:@"longitude"];
-    [testObject save];
-    NSLog(@"done!");
+    [button setTitle:@"" forState:UIControlStateNormal];
+    buttonImage = image;
+    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController*)picker
 {
-    NSLog(@"check-10");
     // イメージピッカーを隠す
     [self dismissViewControllerAnimated:YES completion:nil];
-    NSLog(@"check-20");
+}
+
+-(IBAction)addImage{
+    //image picker
+    [self showCameraSheet];
 }
 
 - (void)didReceiveMemoryWarning

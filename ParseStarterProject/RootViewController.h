@@ -9,13 +9,14 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 @interface RootViewController : UIViewController<MKMapViewDelegate, CLLocationManagerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>{
-    IBOutlet UILabel *testLabel;
     IBOutlet UIButton *testButton;
     IBOutlet UITextField *testTextField;
+    UIImage *buttonImage;
+    IBOutlet UIButton *button;
     //map
     IBOutlet MKMapView *mapView;
     CLLocationManager *locationManager;
 }
-
+-(IBAction)addImage;
 -(IBAction)bentatsu;
 @end
