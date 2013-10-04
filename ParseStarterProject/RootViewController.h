@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-@interface RootViewController : UIViewController<MKMapViewDelegate, CLLocationManagerDelegate>{
+@interface RootViewController : UIViewController<MKMapViewDelegate, CLLocationManagerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>{
     IBOutlet UILabel *testLabel;
     IBOutlet UIButton *testButton;
     IBOutlet UITextField *testTextField;

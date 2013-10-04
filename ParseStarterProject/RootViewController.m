@@ -44,24 +44,84 @@
 
 //map----------------------------------------------------
 -(void) locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
-    NSLog(@"NEW LOCATION!");
+//    NSLog(@"NEW LOCATION!");
     MKCoordinateRegion  region = mapView.region;
     region.center.latitude = newLocation.coordinate.latitude;
     region.center.longitude = newLocation.coordinate.longitude;
     region.span.latitudeDelta = mapView.region.span.latitudeDelta;
     region.span.longitudeDelta = mapView.region.span.longitudeDelta;
-    NSLog(@"Delta LAT:%f LON :%f", mapView.region.span.latitudeDelta, mapView.region.span.longitudeDelta);
-    
+//    NSLog(@"Delta LAT:%f LON :%f", mapView.region.span.latitudeDelta, mapView.region.span.longitudeDelta);
     [mapView setRegion:region animated:YES];
     [mapView setCenterCoordinate:newLocation.coordinate animated:YES];
 }
 
 - (IBAction)bentatsu{
+    //image picker
+    [self showCameraSheet];
+}
+
+- (IBAction)showCameraSheet
+{
+    // アクションシートを作る
+    UIActionSheet*  sheet;
+    sheet = [[UIActionSheet alloc]
+             initWithTitle:@"Select Soruce Type"
+             delegate:self
+             cancelButtonTitle:@"Cancel"
+             destructiveButtonTitle:nil
+             otherButtonTitles:@"Photo Library", @"Camera", @"Saved Photos", nil];
+    // アクションシートを表示する
+    [sheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet*)actionSheet
+clickedButtonAtIndex:(NSInteger)buttonIndex{
+    // ボタンインデックスをチェックする
+    NSLog(@"buttonIndex:%d", buttonIndex);
+    if (buttonIndex >= 3) {
+        return;
+    }
+    // ソースタイプを決定する
+    UIImagePickerControllerSourceType   sourceType = 0;
+    switch (buttonIndex) {
+        case 0: {
+            sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            break;
+        }
+        case 1: {
+            sourceType = UIImagePickerControllerSourceTypeCamera;
+            break;
+        }
+        case 2: {
+            sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+            break;
+        }
+    }
+    // 使用可能かどうかチェックする
+    if (![UIImagePickerController isSourceTypeAvailable:sourceType]) {
+        return;
+    }
+    NSLog(@"image picker---------------------");
+    UIImagePickerController *imagePicker;
+    imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.delegate = self;
+//    imagePicker.allowsEditing = YES;
+    imagePicker.sourceType = sourceType;
+    [self presentViewController:imagePicker animated:YES completion:nil];
+}
+
+- (void)imagePickerController:(UIImagePickerController*)picker
+        didFinishPickingImage:(UIImage*)image
+                  editingInfo:(NSDictionary*)editingInfo
+{
+    // イメージピッカーを隠す
+    [self dismissViewControllerAnimated:YES completion:nil];
+    //post
+    NSLog(@"posting data to perse.com.....");
     CLLocation *location = [locationManager location];
-    NSLog(@"LAT:%f LON:%f", location.coordinate.latitude, location.coordinate.longitude);
-    UIImage *testImg= [UIImage imageNamed:@"hero.jpg"];
+    //    NSLog(@"LAT:%f LON:%f", location.coordinate.latitude, location.coordinate.longitude);
     //UIGraphicsEndImageContext();
-    NSData *imageData = UIImageJPEGRepresentation(testImg, 0.05f);
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.0f);//0が最高圧縮, 1が最低圧縮
     
     PFFile *imageFile = [PFFile fileWithName:@"Image.jpg" data:imageData];
     PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
@@ -71,6 +131,15 @@
     [testObject setObject:[NSString stringWithFormat:@"%f", location.coordinate.latitude] forKey:@"latitude"];
     [testObject setObject:[NSString stringWithFormat:@"%f", location.coordinate.longitude] forKey:@"longitude"];
     [testObject save];
+    NSLog(@"done!");
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController*)picker
+{
+    NSLog(@"check-10");
+    // イメージピッカーを隠す
+    [self dismissViewControllerAnimated:YES completion:nil];
+    NSLog(@"check-20");
 }
 
 - (void)didReceiveMemoryWarning
