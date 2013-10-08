@@ -11,18 +11,13 @@
 #import <Parse/Parse.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 @interface RootViewController : UIViewController<MKMapViewDelegate, CLLocationManagerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>{
-    IBOutlet UIButton *testButton;
-    IBOutlet UITextField *testTextField;
-    UIImage *buttonImage;
     IBOutlet UIButton *button;
+    UIImage *image;
     //map
     IBOutlet MKMapView *mapView;
     CLLocationManager *locationManager;
-    PFInstallation *installation;
     float photoLatitude;
     float photoLongitude;
 }
--(IBAction)addImage;
--(IBAction)bentatsu;
--(IBAction)check;
+-(IBAction)showActionSheet;
 @end

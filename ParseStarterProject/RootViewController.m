@@ -8,6 +8,7 @@
 
 #import "RootViewController.h"
 #import <Parse/Parse.h>
+#import "SubmitViewController.h"
 @interface RootViewController ()
 
 @end
@@ -40,8 +41,7 @@
     CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(0.0f, 0.0f);
     MKCoordinateRegion region = MKCoordinateRegionMake(coordinate, span);
     [mapView setRegion:region animated:NO];
-    installation = [PFInstallation currentInstallation];
-    [installation saveInBackground];
+
 }
 
 //map----------------------------------------------------
@@ -52,36 +52,12 @@
     region.center.longitude = newLocation.coordinate.longitude;
     region.span.latitudeDelta = mapView.region.span.latitudeDelta;
     region.span.longitudeDelta = mapView.region.span.longitudeDelta;
-//    NSLog(@"Delta LAT:%f LON :%f", mapView.region.span.latitudeDelta, mapView.region.span.longitudeDelta);
     [mapView setRegion:region animated:YES];
     [mapView setCenterCoordinate:newLocation.coordinate animated:YES];
 }
 
-- (IBAction)bentatsu{
-    //post
-    NSLog(@"posting data to perse.com.....");
-    //    NSLog(@"LAT:%f LON:%f", location.coordinate.latitude, location.coordinate.longitude);
-    //UIGraphicsEndImageContext();
-    NSData *imageData = UIImageJPEGRepresentation(buttonImage, 0.0f);//0が最高圧縮, 1が最低圧縮
-    
-    PFFile *imageFile = [PFFile fileWithName:@"Image.jpg" data:imageData];
-    PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
-    [testObject setObject:imageFile forKey:@"image"];
-    [testObject setObject:testTextField.text forKey:@"comment"];
-    [testObject setObject:[NSString stringWithFormat:@"%f", photoLatitude] forKey:@"latitude"];
-    [testObject setObject:[NSString stringWithFormat:@"%f", photoLongitude] forKey:@"longitude"];
-    [testObject setObject:[NSString stringWithString:installation.timeZone] forKey:@"timezone"];
-    [testObject save];
-    NSLog(@"done!");
-}
 
-- (IBAction)check{
-    NSLog(@"checking===========================");    
-    NSLog(@"timeZone: %@", installation.timeZone);
-}
-
-
-- (IBAction)showCameraSheet
+- (void)showActionSheet
 {
     // アクションシートを作る
     UIActionSheet*  sheet;
@@ -125,6 +101,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     NSLog(@"image picker---------------------");
     UIImagePickerController *imagePicker;
     imagePicker = [[UIImagePickerController alloc] init];
+
     imagePicker.delegate = self;
 //    imagePicker.allowsEditing = YES;
     imagePicker.sourceType = sourceType;
@@ -150,11 +127,12 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
         photoLongitude = locationManager.location.coordinate.longitude;
     }
     [info objectForKey:UIImagePickerControllerOriginalImage];
-    
-    [picker dismissViewControllerAnimated:YES completion:nil];
-    [button setTitle:@"" forState:UIControlStateNormal];
-    buttonImage = [info objectForKey:UIImagePickerControllerOriginalImage];
-    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    SubmitViewController *submitViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"SubmitViewController"];
+    [submitViewController setImage:image];
+    [submitViewController setGps:CGPointMake(photoLatitude, photoLongitude)];
+    NSLog(@"push");
+    [picker pushViewController:submitViewController animated:YES];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController*)picker
@@ -163,10 +141,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
--(IBAction)addImage{
-    //image picker
-    [self showCameraSheet];
-}
 
 - (void)didReceiveMemoryWarning
 {
