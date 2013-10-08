@@ -1,6 +1,5 @@
 #import <Parse/Parse.h>
 #import "ParseStarterProjectAppDelegate.h"
-#import "ParseStarterProjectViewController.h"
 
 @implementation ParseStarterProjectAppDelegate
 

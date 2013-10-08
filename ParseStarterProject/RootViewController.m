@@ -40,6 +40,8 @@
     CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(0.0f, 0.0f);
     MKCoordinateRegion region = MKCoordinateRegionMake(coordinate, span);
     [mapView setRegion:region animated:NO];
+    installation = [PFInstallation currentInstallation];
+    [installation saveInBackground];
 }
 
 //map----------------------------------------------------
@@ -58,7 +60,6 @@
 - (IBAction)bentatsu{
     //post
     NSLog(@"posting data to perse.com.....");
-    CLLocation *location = [locationManager location];
     //    NSLog(@"LAT:%f LON:%f", location.coordinate.latitude, location.coordinate.longitude);
     //UIGraphicsEndImageContext();
     NSData *imageData = UIImageJPEGRepresentation(buttonImage, 0.0f);//0が最高圧縮, 1が最低圧縮
@@ -67,11 +68,18 @@
     PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
     [testObject setObject:imageFile forKey:@"image"];
     [testObject setObject:testTextField.text forKey:@"comment"];
-    [testObject setObject:[NSString stringWithFormat:@"%f", location.coordinate.latitude] forKey:@"latitude"];
-    [testObject setObject:[NSString stringWithFormat:@"%f", location.coordinate.longitude] forKey:@"longitude"];
+    [testObject setObject:[NSString stringWithFormat:@"%f", photoLatitude] forKey:@"latitude"];
+    [testObject setObject:[NSString stringWithFormat:@"%f", photoLongitude] forKey:@"longitude"];
+    [testObject setObject:[NSString stringWithString:installation.timeZone] forKey:@"timezone"];
     [testObject save];
     NSLog(@"done!");
 }
+
+- (IBAction)check{
+    NSLog(@"checking===========================");    
+    NSLog(@"timeZone: %@", installation.timeZone);
+}
+
 
 - (IBAction)showCameraSheet
 {
@@ -123,14 +131,29 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     [self presentViewController:imagePicker animated:YES completion:nil];
 }
 
-- (void)imagePickerController:(UIImagePickerController*)picker
-        didFinishPickingImage:(UIImage*)image
-                  editingInfo:(NSDictionary*)editingInfo
-{
-    // イメージピッカーを隠す
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    //GPS
+    ALAssetsLibrary* assetslibrary = [[ALAssetsLibrary alloc] init];
+    if (picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary || picker.sourceType == UIImagePickerControllerSourceTypeSavedPhotosAlbum) {
+        [assetslibrary assetForURL:[info objectForKey:UIImagePickerControllerReferenceURL]
+                       resultBlock: ^(ALAsset *myasset) {
+                           CLLocation *loc = ((CLLocation*)[myasset valueForProperty:ALAssetPropertyLocation]);
+                           CLLocationCoordinate2D c = loc.coordinate;
+                           photoLatitude   = c.latitude;
+                           photoLongitude  = c.longitude;
+                           NSLog(@"photoLibrary LON:%f LAT:%f", photoLatitude, photoLongitude);
+                       }
+                      failureBlock: ^(NSError *err) {
+                      }];
+    }else{
+        photoLatitude = locationManager.location.coordinate.latitude;
+        photoLongitude = locationManager.location.coordinate.longitude;
+    }
+    [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    [picker dismissViewControllerAnimated:YES completion:nil];
     [button setTitle:@"" forState:UIControlStateNormal];
-    buttonImage = image;
+    buttonImage = [info objectForKey:UIImagePickerControllerOriginalImage];
     [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
 }
 

@@ -49,6 +49,17 @@
                                     <action selector="addImage" destination="eoF-cG-6dn" eventType="touchUpInside" id="Gjs-3I-maw"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zd0-rW-qgf">
+                                <rect key="frame" x="254" y="55" width="58" height="58"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.56221648189999995" green="0.77923387099999997" blue="0.96260710689999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="check">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="check" destination="eoF-cG-6dn" eventType="touchUpInside" id="Dbe-Eg-JvU"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
