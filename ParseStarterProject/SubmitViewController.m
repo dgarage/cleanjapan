@@ -9,7 +9,7 @@
 #import "SubmitViewController.h"
 
 @interface SubmitViewController ()
-
+- (void)textInputChanged:(NSNotification *)note;
 @end
 
 @implementation SubmitViewController
@@ -32,6 +32,8 @@
     [textField becomeFirstResponder];
     installation = [PFInstallation currentInstallation];
     [installation saveInBackground];
+    button.enabled = NO;
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textInputChanged:) name:UITextFieldTextDidChangeNotification object:textField];
 }
 
 
@@ -54,6 +56,18 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (BOOL)shouldEnableDoneButton {
+	BOOL enableDoneButton = NO;
+	if (textField.text != nil &&
+		textField.text.length > 0) {
+		enableDoneButton = YES;
+	}
+	return enableDoneButton;
+}
+
+- (void)textInputChanged:(NSNotification *)note {
+    button.enabled = [self shouldEnableDoneButton];
+}
 
 - (void)didReceiveMemoryWarning
 {
