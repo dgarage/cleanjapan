@@ -10,6 +10,9 @@
 #import <MapKit/MapKit.h>
 #import <Parse/Parse.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "ParseStarterProjectAppDelegate.h"
+#import "Annotation.h"
+#import "DetailViewController.h"
 @interface RootViewController : UIViewController<MKMapViewDelegate, CLLocationManagerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>{
     IBOutlet UIButton *button;
     UIImage *image;
@@ -20,4 +23,9 @@
     float photoLongitude;
 }
 -(IBAction)showActionSheet;
+//for debug
+-(IBAction)showDebugView;
+-(IBAction)check;
 @end
+
+

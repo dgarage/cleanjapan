@@ -1,3 +1,12 @@
+static NSUInteger const kPAWWallPostsSearch = 20; // query limit for pins and tableviewcells
+static double const kPAWWallPostMaximumSearchDistance = 100.0;
+static NSString * const kPAWParseLocationKey = @"location";
+//static NSString * const kPAWParseUserKey = @"user";
+//static NSString * const kPAWParseUsernameKey = @"username";
+//static NSString * const kPAWParseTextKey = @"text";
+// UI strings:
+static NSString * const kPAWWallCantViewPost = @"Can’t view post! Get closer.";
+
 @class ParseStarterProjectViewController;
 
 @interface ParseStarterProjectAppDelegate : NSObject <UIApplicationDelegate> {

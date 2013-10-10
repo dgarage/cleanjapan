@@ -15,6 +15,6 @@
     PFInstallation *installation;
 }
 @property(nonatomic, retain)UIImage *image;
-@property(nonatomic, assign)CGPoint gps;
+@property (nonatomic, strong)PFGeoPoint *geoPoint;
 
 @end

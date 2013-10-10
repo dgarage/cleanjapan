@@ -9,17 +9,21 @@
 #import "RootViewController.h"
 #import <Parse/Parse.h>
 #import "SubmitViewController.h"
+#import "ParseGetDataViewController.h"
 @interface RootViewController ()
-
+@property (nonatomic, strong) NSMutableArray *allPosts;
+@property (nonatomic, assign) BOOL mapPinsPlaced;
 @end
 
 @implementation RootViewController
-
+@synthesize allPosts;
+@synthesize mapPinsPlaced;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        allPosts = [[NSMutableArray alloc] initWithCapacity:10];
     }
     return self;
 }
@@ -74,7 +78,6 @@
 - (void)actionSheet:(UIActionSheet*)actionSheet
 clickedButtonAtIndex:(NSInteger)buttonIndex{
     // ボタンインデックスをチェックする
-    NSLog(@"buttonIndex:%d", buttonIndex);
     if (buttonIndex >= 3) {
         return;
     }
@@ -98,7 +101,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (![UIImagePickerController isSourceTypeAvailable:sourceType]) {
         return;
     }
-    NSLog(@"image picker---------------------");
     UIImagePickerController *imagePicker;
     imagePicker = [[UIImagePickerController alloc] init];
 
@@ -111,6 +113,11 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     //GPS
     ALAssetsLibrary* assetslibrary = [[ALAssetsLibrary alloc] init];
+    
+    SubmitViewController *submitViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"SubmitViewController"];
+    [info objectForKey:UIImagePickerControllerOriginalImage];
+    image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    [submitViewController setImage:image];
     if (picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary || picker.sourceType == UIImagePickerControllerSourceTypeSavedPhotosAlbum) {
         [assetslibrary assetForURL:[info objectForKey:UIImagePickerControllerReferenceURL]
                        resultBlock: ^(ALAsset *myasset) {
@@ -119,21 +126,94 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
                            photoLatitude   = c.latitude;
                            photoLongitude  = c.longitude;
                            NSLog(@"photoLibrary LON:%f LAT:%f", photoLatitude, photoLongitude);
+                           PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:photoLatitude longitude:photoLongitude];
+                           [submitViewController setGeoPoint:geoPoint];
                        }
                       failureBlock: ^(NSError *err) {
                       }];
     }else{
         photoLatitude = locationManager.location.coordinate.latitude;
         photoLongitude = locationManager.location.coordinate.longitude;
+        PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:photoLatitude longitude:photoLongitude];
+        NSLog(@"geoPoint LON:%f LAT:%f", geoPoint.latitude, geoPoint.longitude);
+        [submitViewController setGeoPoint:geoPoint];
     }
-    [info objectForKey:UIImagePickerControllerOriginalImage];
-    image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    SubmitViewController *submitViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"SubmitViewController"];
-    [submitViewController setImage:image];
-    [submitViewController setGps:CGPointMake(photoLatitude, photoLongitude)];
     NSLog(@"push");
     [picker pushViewController:submitViewController animated:YES];
 }
+
+- (void)queryForAllPostsNearLocation:(CLLocation *)currentLocation withNearbyDistance:(CLLocationAccuracy)nearbyDistance {
+    PFQuery *wallPostQuery = [PFQuery queryWithClassName:@"TestObject"];
+    // Create a PFGeoPoint using the current location (to use in our query)
+    if ([self.allPosts count] == 0)
+    {
+        wallPostQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    }
+    PFGeoPoint *userLocation =
+    [PFGeoPoint geoPointWithLatitude:currentLocation.coordinate.latitude
+                           longitude:currentLocation.coordinate.longitude];
+    [wallPostQuery whereKey:@"location"
+               nearGeoPoint:userLocation
+           withinKilometers:kPAWWallPostsSearch];
+    
+    [wallPostQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error){
+        if (error) {
+            NSLog(@"Error in geo query!");
+        }else{
+            NSLog(@"checking: la:%f lo%f", photoLatitude, photoLongitude);
+            for (int i = 0; i<5; i++) {
+                [self dropPin:CLLocationCoordinate2DMake(35.64621734619141+0.02*i, 139.7037963867188+0.02*i) withTitle:@"testTitle" subtitle:@"testSubtitle"];
+            }
+        }
+    }];
+}
+
+- (void)dropPin:(CLLocationCoordinate2D)coordinate2D withTitle:(NSString *)title subtitle:(NSString *)subtitle{
+    UIImage *imageTest = [UIImage imageNamed:@"hero.jpg"];
+    Annotation *annotation=[[Annotation alloc] initWithCoordinate:coordinate2D andTitle:title andSubtitle:subtitle andImage:imageTest];
+    [mapView addAnnotation:annotation];
+    [mapView setDelegate:self];
+}
+
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+    static NSString *const kAnnotationReuseIdentifier = @"CPAnnotationView";
+
+    MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:kAnnotationReuseIdentifier];
+    if (annotationView == nil) {
+        annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:kAnnotationReuseIdentifier];
+        annotationView.enabled = YES;
+        annotationView.canShowCallout = YES;
+        UIImage *img = [UIImage imageNamed:@"hero.jpg"];
+        UIButton *calloutButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        [calloutButton setBackgroundImage:img forState:UIControlStateNormal];  // 画像をセットする
+        [calloutButton addTarget:self action:@selector(calloutButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+        annotationView.rightCalloutAccessoryView = calloutButton;
+        annotationView.image = [self resize:[UIImage imageNamed:@"hero.jpg"] width:50 height:50];
+    }
+    return annotationView;
+}
+
+- (void)calloutButtonTapped{
+    NSLog(@"calloutButtonTapped");
+    DetailViewController *detailViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"DetailViewController"];
+    [[self navigationController] pushViewController:detailViewController animated:YES];
+}
+
+- (UIImage *)resize:(UIImage *)originalImage width:(float)width height:(float)height{
+    CGSize resizedSize = CGSizeMake(width, height);
+    UIGraphicsBeginImageContext(resizedSize);
+    [originalImage drawInRect:CGRectMake(0, 0, resizedSize.width, resizedSize.height)];
+    UIImage* resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return resizedImage;
+}
+
+-(IBAction)check{
+    NSLog(@"check");
+    [self queryForAllPostsNearLocation:locationManager.location withNearbyDistance:100];
+}
+
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController*)picker
 {
@@ -141,11 +221,15 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(IBAction)showDebugView{
+    ParseGetDataViewController *debugView = [[self storyboard] instantiateViewControllerWithIdentifier:@"debugView"];
+    [self presentViewController:debugView animated:YES completion:nil];
 }
 
 @end
