@@ -143,26 +143,33 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 }
 
 - (void)queryForAllPostsNearLocation:(CLLocation *)currentLocation withNearbyDistance:(CLLocationAccuracy)nearbyDistance {
-    PFQuery *wallPostQuery = [PFQuery queryWithClassName:@"TestObject"];
+    PFQuery *query = [PFQuery queryWithClassName:@"TestObject"];
     // Create a PFGeoPoint using the current location (to use in our query)
     if ([self.allPosts count] == 0)
     {
-        wallPostQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
+        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     }
-    PFGeoPoint *userLocation =
-    [PFGeoPoint geoPointWithLatitude:currentLocation.coordinate.latitude
-                           longitude:currentLocation.coordinate.longitude];
-    [wallPostQuery whereKey:@"location"
-               nearGeoPoint:userLocation
-           withinKilometers:kPAWWallPostsSearch];
+    PFGeoPoint *centerGeoPoint =
+    [PFGeoPoint geoPointWithLatitude:mapView.centerCoordinate.latitude
+                           longitude:mapView.centerCoordinate.longitude];
+    MKMapPoint centerMapPoint = MKMapPointForCoordinate(mapView.centerCoordinate);
+    MKMapRect mapRect = mapView.visibleMapRect;
+    MKMapPoint eastMapPoint = MKMapPointMake(MKMapRectGetMinX(mapRect), MKMapRectGetMinY(mapRect));
+    float searchDistanceKilometers = MKMetersBetweenMapPoints(centerMapPoint, eastMapPoint)/(double)1000.0;
+    NSLog(@"searchDistance: %f", searchDistanceKilometers);
+    [query whereKey:@"location"
+               nearGeoPoint:centerGeoPoint
+           withinKilometers:searchDistanceKilometers];
     
-    [wallPostQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error){
+    [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error){
         if (error) {
             NSLog(@"Error in geo query!");
         }else{
-            NSLog(@"checking: la:%f lo%f", photoLatitude, photoLongitude);
-            for (int i = 0; i<5; i++) {
-                [self dropPin:CLLocationCoordinate2DMake(35.64621734619141+0.02*i, 139.7037963867188+0.02*i) withTitle:@"testTitle" subtitle:@"testSubtitle"];
+            NSLog(@"result count %d", results.count);
+            for (PFObject *result in results) {
+//                NSLog(@"retrieved related post: %@", result);
+                PFGeoPoint *geoPoint = [result objectForKey:@"location"];
+                [self dropPin:CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude) withTitle:@"testTitle" subtitle:@"testSubtitle"];
             }
         }
     }];
@@ -178,7 +185,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
     static NSString *const kAnnotationReuseIdentifier = @"CPAnnotationView";
-
+    
     MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:kAnnotationReuseIdentifier];
     if (annotationView == nil) {
         annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:kAnnotationReuseIdentifier];
@@ -212,6 +219,8 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 -(IBAction)check{
     NSLog(@"check");
     [self queryForAllPostsNearLocation:locationManager.location withNearbyDistance:100];
+    NSLog(@"current map size:latitudeDelta%f longitudeDelta:/%f", mapView.region.span.latitudeDelta, mapView.region.span.longitudeDelta);
+    
 }
 
 
