@@ -13,6 +13,7 @@
 @end
 
 @implementation DetailViewController
+@synthesize annotation;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -27,6 +28,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    textView.text = [NSString stringWithFormat:@"LAT:%f \nLON:%f\nfoobar_foobar_foobar_foobar_foobar_foobar_foobar_foobar_foobar_foobar", annotation.coordinate.latitude, annotation.coordinate.longitude];
+    imageView.image = annotation.image;
 }
 
 - (void)didReceiveMemoryWarning

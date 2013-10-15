@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <Parse/Parse.h>
+#import "Annotation.h"
 @interface DetailViewController : UIViewController{
-    
+    IBOutlet UITextView *textView;
+    IBOutlet UIImageView *imageView;
 }
- IBOutlet
+@property (nonatomic, retain) Annotation *annotation;
 
 @end

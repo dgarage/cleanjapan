@@ -144,7 +144,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     [picker pushViewController:submitViewController animated:YES];
 }
 
-- (void)queryForAllPostsNearLocation:(CLLocation *)currentLocation withNearbyDistance:(CLLocationAccuracy)nearbyDistance {
+- (void)queryForAllPostsNearLocation:(CLLocation *)currentLocation {
     PFQuery *query = [PFQuery queryWithClassName:@"TestObject"];
     // Create a PFGeoPoint using the current location (to use in our query)
     if ([self.allPosts count] == 0)
@@ -251,16 +251,18 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
         UIImage *img = [UIImage imageNamed:@"hero.jpg"];
         UIButton *calloutButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
         [calloutButton setBackgroundImage:img forState:UIControlStateNormal];  // 画像をセットする
-        [calloutButton addTarget:self action:@selector(calloutButtonTapped) forControlEvents:UIControlEventTouchUpInside];
         annotationView.rightCalloutAccessoryView = calloutButton;
         annotationView.image = [self resize:[UIImage imageNamed:@"hero.jpg"] width:50 height:50];
     }
     return annotationView;
 }
 
-- (void)calloutButtonTapped{
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control{
     NSLog(@"calloutButtonTapped");
+    Annotation *annotation = (Annotation*)view.annotation;
+    NSLog(@"annotation comment:%f", annotation.coordinate.latitude);
     DetailViewController *detailViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"DetailViewController"];
+    [detailViewController setAnnotation:(annotation)];
     [[self navigationController] pushViewController:detailViewController animated:YES];
 }
 
@@ -276,7 +278,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 -(IBAction)check{
     NSLog(@"check");
     NSLog(@"allpost allPosts %d", self.allPosts.count);
-    [self queryForAllPostsNearLocation:locationManager.location withNearbyDistance:100];
+    [self queryForAllPostsNearLocation:locationManager.location];
     NSLog(@"current map size:latitudeDelta%f longitudeDelta:/%f", mapView.region.span.latitudeDelta, mapView.region.span.longitudeDelta);
     
 }
