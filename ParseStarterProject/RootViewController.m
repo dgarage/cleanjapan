@@ -161,14 +161,61 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
                nearGeoPoint:centerGeoPoint
            withinKilometers:searchDistanceKilometers];
     
-    [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error){
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error){
         if (error) {
             NSLog(@"Error in geo query!");
         }else{
-            NSLog(@"result count %d", results.count);
-            for (PFObject *result in results) {
+            // 1. Find new posts (those that we did not already have)
+            NSMutableArray *newPosts = [[NSMutableArray alloc] init];
+            NSMutableArray *allNewPosts = [[NSMutableArray alloc] init];
+            for (PFObject *object in objects) {
+                Annotation *newPost = [[Annotation alloc] initWithPFObject:object];
+                [allNewPosts addObject:newPost];
+                BOOL found = NO;
+                for (Annotation *currentPost in allPosts) {
+					if ([newPost equalToPost:currentPost]) {
+						found = YES;
+					}
+                    if (!found) {
+                        [newPosts addObject:newPost];
+                    }
+				}
+			}
+            // newPosts now contains our new objects.
+            
+			// 2. Find posts in allPosts that didn't make the cut.
+            NSMutableArray *postsToRemove = [[NSMutableArray alloc] initWithCapacity:kPAWWallPostsSearch];
+			for (Annotation *currentPost in allPosts) {
+				BOOL found = NO;
+				// Use our object cache from the first loop to save some work.
+				for (Annotation *allNewPost in allNewPosts) {
+					if ([currentPost equalToPost:allNewPost]) {
+						found = YES;
+					}
+				}
+				if (!found) {
+					[postsToRemove addObject:currentPost];
+				}
+			}
+			// postsToRemove has objects that didn't come in with our new results.
+            
+            // 3. Configure our new posts; these are about to go onto the map.
+			for (Annotation *newPost in newPosts) {
+				CLLocation *objectLocation = [[CLLocation alloc] initWithLatitude:newPost.coordinate.latitude longitude:newPost.coordinate.longitude];
+				// if this post is outside the filter distance, don't show the regular callout.
+				CLLocationDistance distanceFromCurrent = [currentLocation distanceFromLocation:objectLocation];
+				[newPost setTitleAndSubtitleOutsideDistance:( distanceFromCurrent > nearbyDistance ? YES : NO )];
+				// Animate all pins after the initial load:
+				newPost.animatesDrop = mapPinsPlaced;
+			}
+            
+            // 4. Remove the old posts and add the new posts
+            
+            
+            NSLog(@"result count %d", objects.count);
+            for (PFObject *object in objects) {
 //                NSLog(@"retrieved related post: %@", result);
-                PFGeoPoint *geoPoint = [result objectForKey:@"location"];
+                PFGeoPoint *geoPoint = [object objectForKey:@"location"];
                 [self dropPin:CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude) withTitle:@"testTitle" subtitle:@"testSubtitle"];
             }
         }
