@@ -18,6 +18,7 @@
 @implementation RootViewController
 @synthesize allPosts;
 @synthesize mapPinsPlaced;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -46,6 +47,7 @@
     MKCoordinateRegion region = MKCoordinateRegionMake(coordinate, span);
     [mapView setRegion:region animated:NO];
 
+    allPosts = [[NSMutableArray alloc] init];
 }
 
 //map----------------------------------------------------
@@ -173,18 +175,18 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
                 [allNewPosts addObject:newPost];
                 BOOL found = NO;
                 for (Annotation *currentPost in allPosts) {
-					if ([newPost equalToPost:currentPost]) {
-						found = YES;
+                    if ([newPost equalToPost:currentPost]) {
+                        found = YES;
 					}
-                    if (!found) {
-                        [newPosts addObject:newPost];
-                    }
 				}
+                if (!found) {
+                    [newPosts addObject:newPost];
+                }
 			}
             // newPosts now contains our new objects.
             
 			// 2. Find posts in allPosts that didn't make the cut.
-            NSMutableArray *postsToRemove = [[NSMutableArray alloc] initWithCapacity:kPAWWallPostsSearch];
+            NSMutableArray *postsToRemove = [[NSMutableArray alloc] init];
 			for (Annotation *currentPost in allPosts) {
 				BOOL found = NO;
 				// Use our object cache from the first loop to save some work.
@@ -202,22 +204,30 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
             // 3. Configure our new posts; these are about to go onto the map.
 			for (Annotation *newPost in newPosts) {
 				CLLocation *objectLocation = [[CLLocation alloc] initWithLatitude:newPost.coordinate.latitude longitude:newPost.coordinate.longitude];
-				// if this post is outside the filter distance, don't show the regular callout.
-				CLLocationDistance distanceFromCurrent = [currentLocation distanceFromLocation:objectLocation];
-				[newPost setTitleAndSubtitleOutsideDistance:( distanceFromCurrent > nearbyDistance ? YES : NO )];
-				// Animate all pins after the initial load:
+                // Animate all pins after the initial load:
 				newPost.animatesDrop = mapPinsPlaced;
 			}
             
             // 4. Remove the old posts and add the new posts
+            // At this point, newAllPosts contains a new list of post objects.
+			// We should add everything in newPosts to the map, remove everything in postsToRemove,
+			// and add newPosts to allPosts.
+			[mapView removeAnnotations:postsToRemove];
+			[mapView addAnnotations:newPosts];
+			[mapView setDelegate:self];
+            [allPosts addObjectsFromArray:newPosts];
+			[allPosts removeObjectsInArray:postsToRemove];
             
+			self.mapPinsPlaced = YES;
             
-            NSLog(@"result count %d", objects.count);
-            for (PFObject *object in objects) {
-//                NSLog(@"retrieved related post: %@", result);
-                PFGeoPoint *geoPoint = [object objectForKey:@"location"];
-                [self dropPin:CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude) withTitle:@"testTitle" subtitle:@"testSubtitle"];
-            }
+            NSLog(@"pin num is %d", allPosts.count);
+            
+//            NSLog(@"result count %d", objects.count);
+//            for (PFObject *object in objects) {
+////                NSLog(@"retrieved related post: %@", result);
+//                PFGeoPoint *geoPoint = [object objectForKey:@"location"];
+//                [self dropPin:CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude) withTitle:@"testTitle" subtitle:@"testSubtitle"];
+//            }
         }
     }];
 }
@@ -265,6 +275,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 
 -(IBAction)check{
     NSLog(@"check");
+    NSLog(@"allpost allPosts %d", self.allPosts.count);
     [self queryForAllPostsNearLocation:locationManager.location withNearbyDistance:100];
     NSLog(@"current map size:latitudeDelta%f longitudeDelta:/%f", mapView.region.span.latitudeDelta, mapView.region.span.longitudeDelta);
     

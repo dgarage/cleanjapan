@@ -38,15 +38,16 @@
 - (id)initWithPFObject:(PFObject *)anObject {
 	self.object = anObject;
 	self.geopoint = [anObject objectForKey:kPAWParseLocationKey];
-    self.image = [anObject objectForKey:kPAWParseImageKey];
+
 //	self.user = [anObject objectForKey:kPAWParseUserKey];
     
 	[anObject fetchIfNeeded];
 //	NSString *aTitle = [anObject objectForKey:kPAWParseTextKey];
 //	NSString *aSubtitle = [anObject objectForKey:kPAWParseUsernameKey];
     CLLocationCoordinate2D aCoordinate = CLLocationCoordinate2DMake(self.geopoint.latitude, self.geopoint.longitude);
-    
-	return [self initWithCoordinate:aCoordinate andTitle:@"TestTitle" andSubtitle:@"TestSubtitle" andImage:image];
+//    UIImage *anImage = [anObject objectForKey:kPAWParseImageKey];
+    UIImage *anImage = [UIImage imageNamed:@"hero.jpg"];
+	return [self initWithCoordinate:aCoordinate andTitle:@"TestTitle" andSubtitle:@"TestSubtitle" andImage:anImage];
 }
 
 - (BOOL)equalToPost:(Annotation *)aPost {
