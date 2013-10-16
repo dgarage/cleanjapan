@@ -29,11 +29,11 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     imageView.image = image;
-    [textField becomeFirstResponder];
+    [textView becomeFirstResponder];
     installation = [PFInstallation currentInstallation];
     [installation saveInBackground];
     button.enabled = NO;
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textInputChanged:) name:UITextFieldTextDidChangeNotification object:textField];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textInputChanged:) name:UITextViewTextDidChangeNotification object:textView];
 }
 
 
@@ -46,7 +46,7 @@
     PFFile *imageFile = [PFFile fileWithName:@"Image.jpg" data:imageData];
     PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
     [testObject setObject:imageFile forKey:@"image"];
-    [testObject setObject:textField.text forKey:@"comment"];
+    [testObject setObject:textView.text forKey:@"comment"];
     [testObject setObject:[NSNumber numberWithDouble:geoPoint.latitude] forKey:@"latitude"];
     [testObject setObject:[NSNumber numberWithDouble:geoPoint.longitude] forKey:@"longitude"];
     [testObject setObject:[PFGeoPoint geoPointWithLatitude:geoPoint.latitude longitude:geoPoint.longitude] forKey:@"location"];
@@ -61,8 +61,8 @@
 
 - (BOOL)shouldEnableDoneButton {
 	BOOL enableDoneButton = NO;
-	if (textField.text != nil &&
-		textField.text.length > 0) {
+	if (textView.text != nil &&
+		textView.text.length > 0) {
 		enableDoneButton = YES;
 	}
 	return enableDoneButton;

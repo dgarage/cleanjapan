@@ -11,7 +11,7 @@
 @interface SubmitViewController : UIViewController{
     IBOutlet UIImageView *imageView;
     IBOutlet UIButton *button;
-    IBOutlet UITextField *textField;
+    IBOutlet UITextView *textView;
     PFInstallation *installation;
 }
 @property(nonatomic, retain)UIImage *image;

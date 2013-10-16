@@ -32,6 +32,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = @"Clean Japan";
 	// Do any additional setup after loading the view.
     //map
     locationManager = [[CLLocationManager alloc] init];
