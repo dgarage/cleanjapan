@@ -27,6 +27,7 @@
 		B2043F581803E99200EC884A /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2043F571803E99200EC884A /* AssetsLibrary.framework */; };
 		B2043F6018041A8E00EC884A /* SubmitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2043F5F18041A8E00EC884A /* SubmitViewController.m */; };
 		B21B343218051E5B0058AEFB /* ParseGetDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B21B343118051E5B0058AEFB /* ParseGetDataViewController.m */; };
+		B23AB4C2180FBFC5007E1BB8 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B23AB4C1180FBFC5007E1BB8 /* SignUpViewController.m */; };
 		B24237F417FBF0EA0030F468 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B24237F317FBF0EA0030F468 /* Storyboard.storyboard */; };
 		B24237F717FBF52F0030F468 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B24237F617FBF52F0030F468 /* RootViewController.m */; };
 		B24237F917FBF7E10030F468 /* hero.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B24237F817FBF7E10030F468 /* hero.jpg */; };
@@ -70,6 +71,8 @@
 		B2043F5F18041A8E00EC884A /* SubmitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubmitViewController.m; sourceTree = "<group>"; };
 		B21B343018051E5B0058AEFB /* ParseGetDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseGetDataViewController.h; sourceTree = "<group>"; };
 		B21B343118051E5B0058AEFB /* ParseGetDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseGetDataViewController.m; sourceTree = "<group>"; };
+		B23AB4C0180FBFC5007E1BB8 /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
+		B23AB4C1180FBFC5007E1BB8 /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
 		B24237F317FBF0EA0030F468 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		B24237F517FBF52F0030F468 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		B24237F617FBF52F0030F468 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
@@ -169,6 +172,8 @@
 				B28A7ECE18064E1E00E8FDE7 /* Annotation.m */,
 				B28A7ED3180696E000E8FDE7 /* DetailViewController.h */,
 				B28A7ED4180696E000E8FDE7 /* DetailViewController.m */,
+				B23AB4C0180FBFC5007E1BB8 /* SignUpViewController.h */,
+				B23AB4C1180FBFC5007E1BB8 /* SignUpViewController.m */,
 			);
 			path = ParseStarterProject;
 			sourceTree = "<group>";
@@ -267,6 +272,7 @@
 				09ABC08213A1D52D009C3FCF /* ParseStarterProjectAppDelegate.m in Sources */,
 				B21B343218051E5B0058AEFB /* ParseGetDataViewController.m in Sources */,
 				B24237F717FBF52F0030F468 /* RootViewController.m in Sources */,
+				B23AB4C2180FBFC5007E1BB8 /* SignUpViewController.m in Sources */,
 				B28A7ED5180696E000E8FDE7 /* DetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

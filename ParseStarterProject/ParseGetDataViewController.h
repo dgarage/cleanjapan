@@ -12,4 +12,7 @@
     IBOutlet UITextView *textView;
 }
 - (IBAction)retrieveData;
+- (IBAction)debug;
+- (IBAction)login;
+
 @end

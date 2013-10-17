@@ -43,15 +43,28 @@
     //    NSLog(@"LAT:%f LON:%f", location.coordinate.latitude, location.coordinate.longitude);
     //UIGraphicsEndImageContext();
     NSData *imageData = UIImageJPEGRepresentation(image, 0.0f);//0が最高圧縮, 1が最低圧縮
-    PFFile *imageFile = [PFFile fileWithName:@"Image.jpg" data:imageData];
-    PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
-    [testObject setObject:imageFile forKey:@"image"];
-    [testObject setObject:textView.text forKey:@"comment"];
-    [testObject setObject:[NSNumber numberWithDouble:geoPoint.latitude] forKey:@"latitude"];
-    [testObject setObject:[NSNumber numberWithDouble:geoPoint.longitude] forKey:@"longitude"];
-    [testObject setObject:[PFGeoPoint geoPointWithLatitude:geoPoint.latitude longitude:geoPoint.longitude] forKey:@"location"];
-    [testObject setObject:[NSString stringWithString:installation.timeZone] forKey:@"timezone"];
-    [testObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    PFFile *imageFile = [PFFile fileWithName:@"image.jpg" data:imageData];
+    PFObject *post = [PFObject objectWithClassName:@"Post"];
+    [post setObject:imageFile forKey:@"image"];
+    [post setObject:textView.text forKey:@"title"];
+    [post setObject:[NSNumber numberWithDouble:geoPoint.latitude] forKey:@"latitude"];
+    [post setObject:[NSNumber numberWithDouble:geoPoint.longitude] forKey:@"longitude"];
+    [post setObject:[PFGeoPoint geoPointWithLatitude:geoPoint.latitude longitude:geoPoint.longitude] forKey:@"location"];
+    [post setObject:[NSString stringWithString:installation.timeZone] forKey:@"timezone"];
+//    NSUUID *uniqueId = [[NSUUID alloc] init];
+//    NSLog(@"id %@", [uniqueId UUIDString]);
+//    [post setObject:[NSString stringWithFormat:@"%@", [uniqueId UUIDString]] forKey:@"uuid"];
+    UIDevice *device = [[UIDevice alloc] init];
+    NSLog(@"%@", [device.identifierForVendor UUIDString]);
+    [post setObject:[NSString stringWithFormat:@"%@", [device.identifierForVendor UUIDString]] forKey:@"identifierForVendor"];
+    
+    
+    ///test
+    PFUser *user = [PFUser currentUser];
+    [post setObject:user forKey:@"user"];
+    //test
+    
+    [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             NSLog(@"upload done!");
         }
