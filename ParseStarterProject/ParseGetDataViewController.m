@@ -52,6 +52,7 @@
             // Hooray! Let them use the app now.
         } else {
             NSString *errorString = [error userInfo][@"error"];
+            NSLog(@"%@", errorString);
             // Show the errorString somewhere and let the user try again.
         }
     }];
@@ -73,7 +74,7 @@
 
 
 //
-//-(IBAction)retrieveData{
+-(IBAction)retrieveData{
 //    NSLog(@"retrieveData");
 //    textView.text = @"";
 //    NSPredicate *predicate = [NSPredicate predicateWithFormat:
@@ -95,6 +96,6 @@
 //            // results will contain users with a hometown team with a winning record
 //    }];
 //    //NSArray *results = [query findObjects];
-//}
+}
 
 @end

@@ -10,6 +10,7 @@
 #import <Parse/Parse.h>
 #import "SubmitViewController.h"
 #import "ParseGetDataViewController.h"
+#import "LogInViewController.h"
 #import "SignUpViewController.h"
 
 @interface RootViewController ()
@@ -208,7 +209,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
             
             // 3. Configure our new posts; these are about to go onto the map.
 			for (Annotation *newPost in newPosts) {
-				CLLocation *objectLocation = [[CLLocation alloc] initWithLatitude:newPost.coordinate.latitude longitude:newPost.coordinate.longitude];
                 // Animate all pins after the initial load:
 				newPost.animatesDrop = mapPinsPlaced;
 			}
@@ -305,77 +305,29 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     ParseGetDataViewController *debugView = [[self storyboard] instantiateViewControllerWithIdentifier:@"debugView"];
     [self presentViewController:debugView animated:YES completion:nil];
 }
+
 //below is for test
 -(IBAction)login{
 
-    [PFAnonymousUtils logInWithBlock:^(PFUser *user, NSError *error) {
-        if (error) {
-            NSLog(@"Anonymous login failed.");
-        } else {
-            NSLog(@"Anonymous user logged in.");
-        }
-    }];
+//    [PFAnonymousUtils logInWithBlock:^(PFUser *user, NSError *error) {
+//        if (error) {
+//            NSLog(@"Anonymous login failed.");
+//        } else {
+//            NSLog(@"Anonymous user logged in.");
+//        }
+//    }];
     
-    SignUpViewController *signUpViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"SignUpViewController"];
-    [self presentViewController:signUpViewController animated:YES completion:nil];
+    LogInViewController *logInViewController = [[LogInViewController alloc] init];
+    logInViewController.delegate = logInViewController;
+    logInViewController.facebookPermissions = @[@"friends_about_me"];
+    logInViewController.fields = PFLogInFieldsUsernameAndPassword | PFLogInFieldsTwitter | PFLogInFieldsFacebook | PFLogInFieldsSignUpButton | PFLogInFieldsDismissButton;
     
-//    NSLog(@"login");
-//
-//    // Get device info
-//    UIDevice *device = [[UIDevice alloc] init];
-//    NSString *uuid_string = [NSString stringWithFormat:@"%@", [device.identifierForVendor UUIDString]];
-//    
-//    // Search by uuid_string if user exists
-//    [self userExists:uuid_string];
-//    
-//    
-//
-//    if() { //Login
-//
-//        PFUser *user = [PFUser currentUser];
-//        
-//        [PFUser logInWithUsernameInBackground:@"Guest" password:uuid_string
-//                                            block:^(PFUser *user, NSError *error) {
-//                                                if (user) {
-//                                                    // Do stuff after successful login.
-//                                                    NSLog(@"login OK");
-//        
-//                                                } else {
-//                                                    // The login failed. Check error to see why.
-//                                                    NSLog(@"login error");
-//                                                }
-//                                            }];
-//    } else { //Signup
-//
-//        PFUser *user = [PFUser user];
-//        
-//        user.username = @"Guest";
-//        user.password = uuid_string;
-//        user.email = @"email@example.com";
-//        
-//        // other fields can be set just like with PFObject
-//        user[@"phone"] = @"415-392-0202";
-//        
-//        [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//            if (!error) {
-//                // Hooray! Let them use the app now.
-//            } else {
-//                NSString *errorString = [error userInfo][@"error"];
-//                // Show the errorString somewhere and let the user try again.
-//            }
-//        }];
-//    }
+    SignUpViewController *signUpViewController = [[SignUpViewController alloc] init];
+    signUpViewController.delegate = signUpViewController;
+    signUpViewController.fields = PFSignUpFieldsDefault | PFSignUpFieldsAdditional;
+    logInViewController.signUpController = signUpViewController;
+    
+    [self presentViewController:logInViewController animated:YES completion:nil];
 }
-
-- (BOOL)userExists:(NSString*)uuid_string{
-    NSLog(@"userExists=============");
-    NSString *foo = @"name = 'Guest' AND password = ";
-    NSPredicate *predicate = [NSPredicate predicateWithFormat: [foo stringByAppendingString:uuid_string]];
-    PFQuery *query = [PFQuery queryWithClassName:@"User" predicate:predicate];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
-                NSLog(@"result count %d", results.count);
-    }];
-}
-
 
 @end

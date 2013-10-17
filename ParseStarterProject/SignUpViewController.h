@@ -6,10 +6,8 @@
 //
 //
 
-#import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
-@interface SignUpViewController : UIViewController<UITableViewDelegate, UITextFieldDelegate, UITableViewDataSource>{
-    IBOutlet UITableView *tableView;
-}
+
+@interface SignUpViewController : PFSignUpViewController
 
 @end

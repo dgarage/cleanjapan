@@ -5,15 +5,16 @@
 //  Created by 藤賀 雄太 on 10/17/13.
 //
 //
-#define TAG_USER_ID 1
-#define TAG_PASSWORD 2
+
 #import "SignUpViewController.h"
 
 @interface SignUpViewController ()
-
+@property (nonatomic, strong) UIImageView *fieldsBackground;
 @end
 
 @implementation SignUpViewController
+
+@synthesize fieldsBackground;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,96 +29,120 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    tableView.delegate = self;
-    tableView.dataSource = self;
+    [self.signUpView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"MainBG.png"]]];
+    [self.signUpView setLogo:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Logo.png"]]];
+    
+    // Change button apperance
+    [self.signUpView.dismissButton setImage:[UIImage imageNamed:@"Exit.png"] forState:UIControlStateNormal];
+    [self.signUpView.dismissButton setImage:[UIImage imageNamed:@"ExitDown.png"] forState:UIControlStateHighlighted];
+    
+    [self.signUpView.signUpButton setBackgroundImage:[UIImage imageNamed:@"SignUp.png"] forState:UIControlStateNormal];
+    [self.signUpView.signUpButton setBackgroundImage:[UIImage imageNamed:@"SignUpDown.png"] forState:UIControlStateHighlighted];
+    [self.signUpView.signUpButton setTitle:@"" forState:UIControlStateNormal];
+    [self.signUpView.signUpButton setTitle:@"" forState:UIControlStateHighlighted];
+    
+    // Add background for fields
+    [self setFieldsBackground:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SignUpFieldBG.png"]]];
+    [self.signUpView insertSubview:fieldsBackground atIndex:1];
+    
+    // Remove text shadow
+    CALayer *layer = self.signUpView.usernameField.layer;
+    layer.shadowOpacity = 0.0f;
+    layer = self.signUpView.passwordField.layer;
+    layer.shadowOpacity = 0.0f;
+    layer = self.signUpView.emailField.layer;
+    layer.shadowOpacity = 0.0f;
+    layer = self.signUpView.additionalField.layer;
+    layer.shadowOpacity = 0.0f;
+    
+    // Set text color
+    [self.signUpView.usernameField setTextColor:[UIColor colorWithRed:135.0f/255.0f green:118.0f/255.0f blue:92.0f/255.0f alpha:1.0]];
+    [self.signUpView.passwordField setTextColor:[UIColor colorWithRed:135.0f/255.0f green:118.0f/255.0f blue:92.0f/255.0f alpha:1.0]];
+    [self.signUpView.emailField setTextColor:[UIColor colorWithRed:135.0f/255.0f green:118.0f/255.0f blue:92.0f/255.0f alpha:1.0]];
+    [self.signUpView.additionalField setTextColor:[UIColor colorWithRed:135.0f/255.0f green:118.0f/255.0f blue:92.0f/255.0f alpha:1.0]];
+    
+    // Change "Additional" to match our use
+    [self.signUpView.additionalField setPlaceholder:@"Phone number"];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    // Move all fields down on smaller screen sizes
+    float yOffset = [UIScreen mainScreen].bounds.size.height <= 480.0f ? 30.0f : 0.0f;
+    
+    CGRect fieldFrame = self.signUpView.usernameField.frame;
+    
+    [self.signUpView.dismissButton setFrame:CGRectMake(10.0f, 10.0f, 87.5f, 45.5f)];
+    [self.signUpView.logo setFrame:CGRectMake(66.5f, 70.0f, 187.0f, 58.5f)];
+    [self.signUpView.signUpButton setFrame:CGRectMake(35.0f, 385.0f, 250.0f, 40.0f)];
+    [self.fieldsBackground setFrame:CGRectMake(35.0f, fieldFrame.origin.y + yOffset, 250.0f, 174.0f)];
+    
+    [self.signUpView.usernameField setFrame:CGRectMake(fieldFrame.origin.x + 5.0f,
+                                                       fieldFrame.origin.y + yOffset,
+                                                       fieldFrame.size.width - 10.0f,
+                                                       fieldFrame.size.height)];
+    yOffset += fieldFrame.size.height;
+    
+    [self.signUpView.passwordField setFrame:CGRectMake(fieldFrame.origin.x + 5.0f,
+                                                       fieldFrame.origin.y + yOffset,
+                                                       fieldFrame.size.width - 10.0f,
+                                                       fieldFrame.size.height)];
+    yOffset += fieldFrame.size.height;
+    
+    [self.signUpView.emailField setFrame:CGRectMake(fieldFrame.origin.x + 5.0f,
+                                                    fieldFrame.origin.y + yOffset,
+                                                    fieldFrame.size.width - 10.0f,
+                                                    fieldFrame.size.height)];
+    yOffset += fieldFrame.size.height;
+    
+    [self.signUpView.additionalField setFrame:CGRectMake(fieldFrame.origin.x + 5.0f,
+                                                         fieldFrame.origin.y + yOffset,
+                                                         fieldFrame.size.width - 10.0f,
+                                                         fieldFrame.size.height)];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+// Sent to the delegate to determine whether the sign up request should be submitted to the server.
+- (BOOL)signUpViewController:(PFSignUpViewController *)signUpController shouldBeginSignUp:(NSDictionary *)info {
+    BOOL informationComplete = YES;
+    for (id key in info) {
+        NSString *field = [info objectForKey:key];
+        if (!field || field.length == 0) {
+            informationComplete = NO;
+            break;
+        }
+    }
+    
+    if (!informationComplete) {
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Missing Information", nil) message:NSLocalizedString(@"Make sure you fill out all of the information!", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+    }
+    
+    return informationComplete;
+}
+
+// Sent to the delegate when a PFUser is signed up.
+- (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+// Sent to the delegate when the sign up attempt fails.
+- (void)signUpViewController:(PFSignUpViewController *)signUpController didFailToSignUpWithError:(NSError *)error {
+    NSLog(@"Failed to sign up...");
+}
+
+// Sent to the delegate when the sign up screen is dismissed.
+- (void)signUpViewControllerDidCancelSignUp:(PFSignUpViewController *)signUpController {
+    NSLog(@"User dismissed the signUpViewController");
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (IBAction)signUp{
-    PFUser *user = [PFUser user];
-    user.username = @"my name";
-    user.password = @"my pass";
-    user.email = @"email@example.com";
-    
-    // other fields can be set just like with PFObject
-    user[@"phone"] = @"415-392-0202";
-    
-    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (!error) {
-            // Hooray! Let them use the app now.
-        } else {
-            NSString *errorString = [error userInfo][@"error"];
-            // Show the errorString somewhere and let the user try again.
-        }
-    }];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    if(cell == nil){
-        cell = [[UITableViewCell alloc]
-                initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
-    cell.textLabel.text = @"foo";
-    
-    //label
-    //textField
-    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(130.0, -2, 200.0, 50.0)];
-    textField.delegate = self;
-    if (indexPath.row == 0)
-    {
-        cell.textLabel.text = @"Username";
-        textField.placeholder = @"Username";
-        textField.secureTextEntry = NO;
-        textField.returnKeyType = UIReturnKeyNext;
-    }
-    else
-    {
-        cell.textLabel.text = @"Password";
-        textField.placeholder = @"Password";
-        textField.secureTextEntry = YES;
-        textField.returnKeyType = UIReturnKeyDone;
-    }
-    [cell.contentView addSubview:textField];
-    return cell;
-}
-
-- (void)textFieldShouldReturn:(UITextField *)textField {
-//    if (textField.tag == TAG_USER_ID)
-//    {
-//        // TableのIndexPathリストを取得
-//        NSArray *indexPathArr = loginInputTbl.indexPathsForVisibleRows;
-//        // パスワードセルのIndexPathを取得
-//        NSIndexPath *indexPathPassword = [indexPathArr objectAtIndex:ROW_IDX_PASSWORD];
-//        // パスワードのセルを取得
-//        UITableViewCell *cellPass = [loginInputTbl cellForRowAtIndexPath:indexPathPassword];
-//        UITextField *passText = (UITextField*)[cellPass viewWithTag:TAG_PASSWORD];
-//        // パスワードの入力開始（カーソルセット）
-//        [passText becomeFirstResponder];
-//    }
-//    else
-//    {
-//        // キーボードを閉じる
-//        [textField resignFirstResponder];
-//    }
-//    return YES;
-}
-
-// セクション数
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-// tableのリスト件数
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 2;
 }
 
 @end
