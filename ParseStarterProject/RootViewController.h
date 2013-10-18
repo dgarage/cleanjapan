@@ -13,6 +13,7 @@
 #import "ParseStarterProjectAppDelegate.h"
 #import "Annotation.h"
 #import "DetailViewController.h"
+#import "Reachability.h"
 @interface RootViewController : UIViewController<MKMapViewDelegate, CLLocationManagerDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>{
     IBOutlet UIButton *button;
     UIImage *image;
@@ -21,6 +22,7 @@
     CLLocationManager *locationManager;
     float photoLatitude;
     float photoLongitude;
+    IBOutlet UIBarButtonItem *barButtonItem;
 }
 -(IBAction)showActionSheet;
 //for debug

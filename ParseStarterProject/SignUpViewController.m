@@ -62,7 +62,7 @@
     [self.signUpView.additionalField setTextColor:[UIColor colorWithRed:135.0f/255.0f green:118.0f/255.0f blue:92.0f/255.0f alpha:1.0]];
     
     // Change "Additional" to match our use
-    [self.signUpView.additionalField setPlaceholder:@"Phone number"];
+    [self.signUpView.additionalField setPlaceholder:@"Phone number"];    
 }
 
 - (void)viewDidLayoutSubviews {
@@ -126,6 +126,13 @@
 
 // Sent to the delegate when a PFUser is signed up.
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"cleanjapan" accessGroup:nil];
+    NSLog(@"user1: %@", self.signUpView.usernameField.text);
+    NSLog(@"pass1: %@", self.signUpView.passwordField.text);
+    [keychainItem setObject:self.signUpView.usernameField.text forKey:(__bridge id)(kSecValueData)];
+    [keychainItem setObject:self.signUpView.passwordField.text forKey:(__bridge id)(kSecAttrAccount)];
+    NSLog(@"pass2: %@", [keychainItem objectForKey:(__bridge id)(kSecValueData)]);
+    NSLog(@"pass2: %@", [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)]);
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 

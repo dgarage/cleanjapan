@@ -41,6 +41,8 @@
 		B23AB4E21810136E007E1BB8 /* SignUp.png in Resources */ = {isa = PBXBuildFile; fileRef = B23AB4DF1810136E007E1BB8 /* SignUp.png */; };
 		B23AB4E31810136E007E1BB8 /* SignUpDown.png in Resources */ = {isa = PBXBuildFile; fileRef = B23AB4E01810136E007E1BB8 /* SignUpDown.png */; };
 		B23AB4E41810136E007E1BB8 /* SignUpFieldBG.png in Resources */ = {isa = PBXBuildFile; fileRef = B23AB4E11810136E007E1BB8 /* SignUpFieldBG.png */; };
+		B23AB4E71810F007007E1BB8 /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = B23AB4E61810F007007E1BB8 /* KeychainItemWrapper.m */; };
+		B23AB4EB181109D3007E1BB8 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B23AB4EA181109D3007E1BB8 /* Reachability.m */; };
 		B24237F417FBF0EA0030F468 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B24237F317FBF0EA0030F468 /* Storyboard.storyboard */; };
 		B24237F717FBF52F0030F468 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B24237F617FBF52F0030F468 /* RootViewController.m */; };
 		B24237F917FBF7E10030F468 /* hero.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B24237F817FBF7E10030F468 /* hero.jpg */; };
@@ -100,6 +102,10 @@
 		B23AB4DF1810136E007E1BB8 /* SignUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SignUp.png; sourceTree = "<group>"; };
 		B23AB4E01810136E007E1BB8 /* SignUpDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SignUpDown.png; sourceTree = "<group>"; };
 		B23AB4E11810136E007E1BB8 /* SignUpFieldBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SignUpFieldBG.png; sourceTree = "<group>"; };
+		B23AB4E51810F007007E1BB8 /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
+		B23AB4E61810F007007E1BB8 /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
+		B23AB4E9181109D3007E1BB8 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		B23AB4EA181109D3007E1BB8 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		B24237F317FBF0EA0030F468 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		B24237F517FBF52F0030F468 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		B24237F617FBF52F0030F468 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
@@ -185,6 +191,10 @@
 		09ABC07713A1D52D009C3FCF /* ParseStarterProject */ = {
 			isa = PBXGroup;
 			children = (
+				B23AB4E9181109D3007E1BB8 /* Reachability.h */,
+				B23AB4EA181109D3007E1BB8 /* Reachability.m */,
+				B23AB4E51810F007007E1BB8 /* KeychainItemWrapper.h */,
+				B23AB4E61810F007007E1BB8 /* KeychainItemWrapper.m */,
 				09ABC08013A1D52D009C3FCF /* ParseStarterProjectAppDelegate.h */,
 				09ABC08113A1D52D009C3FCF /* ParseStarterProjectAppDelegate.m */,
 				09ABC07813A1D52D009C3FCF /* Supporting Files */,
@@ -322,11 +332,13 @@
 				B23AB4C8180FFB6A007E1BB8 /* LogInViewController.m in Sources */,
 				B28A7ECF18064E1E00E8FDE7 /* Annotation.m in Sources */,
 				B2043F6018041A8E00EC884A /* SubmitViewController.m in Sources */,
+				B23AB4EB181109D3007E1BB8 /* Reachability.m in Sources */,
 				09ABC07F13A1D52D009C3FCF /* main.m in Sources */,
 				09ABC08213A1D52D009C3FCF /* ParseStarterProjectAppDelegate.m in Sources */,
 				B21B343218051E5B0058AEFB /* ParseGetDataViewController.m in Sources */,
 				B24237F717FBF52F0030F468 /* RootViewController.m in Sources */,
 				B28A7ED5180696E000E8FDE7 /* DetailViewController.m in Sources */,
+				B23AB4E71810F007007E1BB8 /* KeychainItemWrapper.m in Sources */,
 				B23AB4DE18100ED3007E1BB8 /* SignUpViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

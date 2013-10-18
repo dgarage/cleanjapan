@@ -67,6 +67,7 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="barButtonItem" destination="zwP-1n-R4t" id="hAd-mm-oEc"/>
                         <outlet property="button" destination="R8E-vw-Ff7" id="RyP-kR-Xhp"/>
                         <outlet property="mapView" destination="EBt-cf-4ba" id="sIo-uf-YUr"/>
                     </connections>

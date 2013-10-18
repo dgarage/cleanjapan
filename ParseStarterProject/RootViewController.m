@@ -6,6 +6,9 @@
 //
 //
 
+#define ALERT_CONNECT_ERROR 1
+#define ALERT_ANONYMOUS_ERROR 2
+
 #import "RootViewController.h"
 #import <Parse/Parse.h>
 #import "SubmitViewController.h"
@@ -52,8 +55,18 @@
     [mapView setRegion:region animated:NO];
 
     allPosts = [[NSMutableArray alloc] init];
-//below is for test
-//    [self login];
+    
+    //login
+    if ([self reachable]) {
+        //on line user
+        [self automaticallyLogin];
+    }else{
+        //off line
+        //message
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"AletTest2" message:@"Please connect the internet." delegate:self cancelButtonTitle:@"OK, Retry" otherButtonTitles:nil];
+        alertView.tag = ALERT_CONNECT_ERROR;
+        [alertView show];
+    }
 }
 
 //map----------------------------------------------------
@@ -81,6 +94,37 @@
              otherButtonTitles:@"Photo Library", @"Camera", @"Saved Photos", nil];
     // アクションシートを表示する
     [sheet showInView:self.view];
+}
+
+-(void)alertView:(UIAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (alertView.tag) {
+        case ALERT_ANONYMOUS_ERROR:
+            switch (buttonIndex) {
+                case 0:
+                    //１番目のボタンが押されたときの処理を記述する
+                    NSLog(@"ALERT_ANONYMOUS_ERROR");
+                    [self automaticallyLogin];
+                    break;
+                case 1:
+                    //２番目のボタンが押されたときの処理を記述する
+                    break;
+            }
+            break;
+        case ALERT_CONNECT_ERROR:
+            switch (buttonIndex) {
+                case 0:
+                    //１番目のボタンが押されたときの処理を記述する
+                    NSLog(@"ALERT_CONNECT_ERROR");
+                    break;
+                case 1:
+                    //２番目のボタンが押されたときの処理を記述する
+                    [self automaticallyLogin];
+                    break;
+            }
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)actionSheet:(UIActionSheet*)actionSheet
@@ -282,10 +326,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 
 -(IBAction)check{
     NSLog(@"check");
-    NSLog(@"allpost allPosts %d", self.allPosts.count);
-    [self queryForAllPostsNearLocation:locationManager.location];
-    NSLog(@"current map size:latitudeDelta%f longitudeDelta:/%f", mapView.region.span.latitudeDelta, mapView.region.span.longitudeDelta);
-    
+    NSLog(@"reachable: %d", [self reachable]);
 }
 
 
@@ -328,6 +369,43 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     logInViewController.signUpController = signUpViewController;
     
     [self presentViewController:logInViewController animated:YES completion:nil];
+}
+
+-(void)automaticallyLogin{
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"cleanjapan" accessGroup:nil];
+    [PFUser logInWithUsernameInBackground:[keychainItem objectForKey:(__bridge id)(kSecValueData)] password:[keychainItem objectForKey:(__bridge id)(kSecAttrAccount)]
+                                    block:^(PFUser *user, NSError *error) {
+                                        if (user) {
+                                            // Do stuff after successful login.
+                                            NSLog(@"login success!");
+                                            NSLog(@"login User: %@", [keychainItem objectForKey:(__bridge id)(kSecValueData)]);
+                                            NSLog(@"login Pass: %@", [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)]);
+                                            barButtonItem.title = [keychainItem objectForKey:(__bridge id)(kSecValueData)];
+                                        } else {
+                                            // The login failed. Check error to see why.
+                                            [PFAnonymousUtils logInWithBlock:^(PFUser *user, NSError *error) {
+                                                if (error) {
+                                                    NSLog(@"Anonymous login failed.");
+                                                    //message
+                                                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"AletTest1" message:@"Please Retry." delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:nil];
+                                                    alertView.tag = ALERT_ANONYMOUS_ERROR;
+                                                    [alertView show];
+                                                } else {
+                                                    NSLog(@"Anonymous user logged in.");
+                                                    barButtonItem.title = @"Guest";
+                                                }
+                                            }];
+                                        }
+                                    }];
+}
+
+-(BOOL)reachable {
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    if(networkStatus == NotReachable) {
+        return NO;
+    }
+    return YES;
 }
 
 @end
