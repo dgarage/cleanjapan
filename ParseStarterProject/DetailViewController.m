@@ -14,6 +14,7 @@
 
 @implementation DetailViewController
 @synthesize annotation;
+@synthesize commentArray;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -38,12 +39,76 @@
         }
     }];
 //    UIImage *image = [UIImage imageWithData:[annotation.object objectForKey:@"image"]];
+    //comment
+    commentTableView.delegate = self;
+    commentTableView.dataSource = self;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self
+                                   action:@selector(dismissKeyboard)];
+    
+    [self.view addGestureRecognizer:tap];
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"Comment"];
+    [query whereKey:@"postObjectId" equalTo:[annotation.object objectId]];
+    commentArray = [NSMutableArray array];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            // The find succeeded.
+            NSLog(@"Successfully retrieved %d scores.", objects.count);
+            // Do something with the found objects
+            for (PFObject *object in objects) {
+                NSLog(@"%@", object.objectId);
+                [commentArray addObject:[object objectForKey:@"comment"]];
+            }
+            [commentTableView reloadData];
+        } else {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    if (nil == cell){
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    cell.textLabel.text = [commentArray objectAtIndex:indexPath.row];
+    return cell;
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return commentArray.count;
+}
+
+-(IBAction)comment{
+    NSLog(@"comment: %@", commentTextView.text);
+    PFObject *comment = [PFObject objectWithClassName:@"Comment"];
+    [comment setObject:commentTextView.text forKey:@"comment"];
+    PFUser *user = [PFUser currentUser];
+    [comment setObject:user forKey:@"user"];
+    [comment setObject:[annotation.object objectId] forKey:@"postObjectId"];
+    [comment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSLog(@"comment upload done!");
+        }
+    }];
+}
+
+-(void)dismissKeyboard {
+    [commentTextView resignFirstResponder];
 }
 
 @end

@@ -9,10 +9,14 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 #import "Annotation.h"
-@interface DetailViewController : UIViewController{
+@interface DetailViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>{
     IBOutlet UITextView *textView;
     IBOutlet UIImageView *imageView;
+    IBOutlet UITableView *commentTableView;
+    IBOutlet UITextView *commentTextView;
 }
+- (IBAction)comment;
 @property (nonatomic, retain) Annotation *annotation;
+@property (nonatomic, retain) NSMutableArray *commentArray;
 
 @end
