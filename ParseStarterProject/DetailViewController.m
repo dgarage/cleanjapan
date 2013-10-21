@@ -28,8 +28,16 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    textView.text = [NSString stringWithFormat:@"LAT:%f \nLON:%f\nfoobar_foobar_foobar_foobar_foobar_foobar_foobar_foobar_foobar_foobar", annotation.coordinate.latitude, annotation.coordinate.longitude];
-    imageView.image = annotation.image;
+    NSLog(@"annotation objectID: %@", [annotation.object objectId]);
+    textView.text = [NSString stringWithFormat:@"%@", [annotation.object objectForKey:@"title"]];
+    PFFile *imageFile = [annotation.object objectForKey:@"image"];
+    [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        if (!error) {
+            UIImage *image = [UIImage imageWithData:data];
+            imageView.image = image;
+        }
+    }];
+//    UIImage *image = [UIImage imageWithData:[annotation.object objectForKey:@"image"]];
 }
 
 - (void)didReceiveMemoryWarning

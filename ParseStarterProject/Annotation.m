@@ -15,21 +15,21 @@
 @property (nonatomic, copy) UIImage *image;
 @property (nonatomic, strong) PFObject *object;
 @property (nonatomic, strong) PFGeoPoint *geopoint;
+@property (nonatomic, strong) PFUser *user;
 @end
 
 @implementation Annotation
 @synthesize coordinate;
 @synthesize subtitle;
 @synthesize title;
-@synthesize image;
 
-- (id)initWithCoordinate:(CLLocationCoordinate2D)aCoordinate andTitle:(NSString *)aTitle andSubtitle:(NSString *)aSubtitle andImage:(UIImage *)aImage{
+- (id)initWithCoordinate:(CLLocationCoordinate2D)aCoordinate andTitle:(NSString *)aTitle andSubtitle:(NSString *)aSubtitle{
 	self = [super init];
 	if (self) {
 		self.coordinate = aCoordinate;
 		self.title = aTitle;
 		self.subtitle = aSubtitle;
-        self.image = aImage;
+        
         self.animatesDrop = NO;
 	}
 	return self;
@@ -38,16 +38,14 @@
 - (id)initWithPFObject:(PFObject *)anObject {
 	self.object = anObject;
 	self.geopoint = [anObject objectForKey:kPAWParseLocationKey];
-
-//	self.user = [anObject objectForKey:kPAWParseUserKey];
-    
-	[anObject fetchIfNeeded];
-//	NSString *aTitle = [anObject objectForKey:kPAWParseTextKey];
-//	NSString *aSubtitle = [anObject objectForKey:kPAWParseUsernameKey];
+	self.user = [anObject objectForKey:kPAWParseUserKey];
+    [anObject fetchIfNeeded];
+	NSString *aTitle = [anObject objectForKey:kPAWParseTitleKey];
+    NSString *aSubtitle;
+    aSubtitle = [[anObject objectForKey:kPAWParseUserKey] objectForKey:kPAWParseUsernameKey];
     CLLocationCoordinate2D aCoordinate = CLLocationCoordinate2DMake(self.geopoint.latitude, self.geopoint.longitude);
 //    UIImage *anImage = [anObject objectForKey:kPAWParseImageKey];
-    UIImage *anImage = [UIImage imageNamed:@"hero.jpg"];
-	return [self initWithCoordinate:aCoordinate andTitle:@"TestTitle" andSubtitle:@"TestSubtitle" andImage:anImage];
+    return [self initWithCoordinate:aCoordinate andTitle:aTitle andSubtitle:aSubtitle];
 }
 
 - (BOOL)equalToPost:(Annotation *)aPost {

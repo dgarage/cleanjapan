@@ -67,6 +67,9 @@
         alertView.tag = ALERT_CONNECT_ERROR;
         [alertView show];
     }
+    //keychain reset
+//    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"cleanjapan" accessGroup:nil];
+//    [keychainItem resetKeychainItem];
 }
 
 //map----------------------------------------------------
@@ -212,7 +215,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     [query whereKey:@"location"
                nearGeoPoint:centerGeoPoint
            withinKilometers:searchDistanceKilometers];
-    
+    [query includeKey:kPAWParseUserKey];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error){
         if (error) {
             NSLog(@"Error in geo query!");
@@ -281,12 +284,12 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     }];
 }
 
-- (void)dropPin:(CLLocationCoordinate2D)coordinate2D withTitle:(NSString *)title subtitle:(NSString *)subtitle{
-    UIImage *imageTest = [UIImage imageNamed:@"hero.jpg"];
-    Annotation *annotation=[[Annotation alloc] initWithCoordinate:coordinate2D andTitle:title andSubtitle:subtitle andImage:imageTest];
-    [mapView addAnnotation:annotation];
-    [mapView setDelegate:self];
-}
+//- (void)dropPin:(CLLocationCoordinate2D)coordinate2D withTitle:(NSString *)title subtitle:(NSString *)subtitle{
+//    UIImage *imageTest = [UIImage imageNamed:@"hero.jpg"];
+//    Annotation *annotation=[[Annotation alloc] initWithCoordinate:coordinate2D andTitle:title andSubtitle:subtitle andImage:imageTest];
+//    [mapView addAnnotation:annotation];
+//    [mapView setDelegate:self];
+//}
 
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
@@ -297,11 +300,14 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
         annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:kAnnotationReuseIdentifier];
         annotationView.enabled = YES;
         annotationView.canShowCallout = YES;
-        UIImage *img = [UIImage imageNamed:@"hero.jpg"];
-        UIButton *calloutButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-        [calloutButton setBackgroundImage:img forState:UIControlStateNormal];  // 画像をセットする
-        annotationView.rightCalloutAccessoryView = calloutButton;
-        annotationView.image = [self resize:[UIImage imageNamed:@"hero.jpg"] width:50 height:50];
+        annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        //ピンのアイコンと、calloutのボタンのデザインをデフォルトを使用するためコメントアウト
+//        UIImage *img = [UIImage imageNamed:@"hero.jpg"];
+//
+//        UIButton *calloutButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+//        [calloutButton setBackgroundImage:img forState:UIControlStateNormal];  // 画像をセットする
+//        annotationView.rightCalloutAccessoryView = calloutButton;
+//        annotationView.image = [self resize:[UIImage imageNamed:@"hero.jpg"] width:50 height:50];// pinをデフォルトにするために、コメントアウト
     }
     return annotationView;
 }
@@ -310,6 +316,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     NSLog(@"calloutButtonTapped");
     Annotation *annotation = (Annotation*)view.annotation;
     NSLog(@"annotation comment:%f", annotation.coordinate.latitude);
+    NSLog(@"annotation objectID: %@", [annotation.object objectId]);
     DetailViewController *detailViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"DetailViewController"];
     [detailViewController setAnnotation:(annotation)];
     [[self navigationController] pushViewController:detailViewController animated:YES];
@@ -327,6 +334,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 -(IBAction)check{
     NSLog(@"check");
     NSLog(@"reachable: %d", [self reachable]);
+    [self queryForAllPostsNearLocation:locationManager.location];
 }
 
 
@@ -387,7 +395,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
                                                 if (error) {
                                                     NSLog(@"Anonymous login failed.");
                                                     //message
-                                                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"AletTest1" message:@"Please Retry." delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:nil];
+                                                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"AlertTest1" message:@"Please Retry." delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:nil];
                                                     alertView.tag = ALERT_ANONYMOUS_ERROR;
                                                     [alertView show];
                                                 } else {
