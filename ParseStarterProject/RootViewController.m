@@ -12,7 +12,7 @@
 #import "RootViewController.h"
 #import <Parse/Parse.h>
 #import "SubmitViewController.h"
-#import "ParseGetDataViewController.h"
+#import "CommentViewController.h"
 #import "LogInViewController.h"
 #import "SignUpViewController.h"
 
@@ -71,6 +71,7 @@
 //    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"cleanjapan" accessGroup:nil];
 //    [keychainItem resetKeychainItem];
 }
+
 
 //map----------------------------------------------------
 -(void) locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
@@ -351,8 +352,8 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 }
 
 -(IBAction)showDebugView{
-    ParseGetDataViewController *debugView = [[self storyboard] instantiateViewControllerWithIdentifier:@"debugView"];
-    [self presentViewController:debugView animated:YES completion:nil];
+    CommentViewController *commentViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"CommentViewController"];
+    [self.navigationController pushViewController:commentViewController animated:YES];
 }
 
 //below is for test

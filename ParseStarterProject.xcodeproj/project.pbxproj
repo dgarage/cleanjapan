@@ -26,7 +26,7 @@
 		B2043F2817FD792B00EC884A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2043F2717FD792B00EC884A /* MapKit.framework */; };
 		B2043F581803E99200EC884A /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2043F571803E99200EC884A /* AssetsLibrary.framework */; };
 		B2043F6018041A8E00EC884A /* SubmitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2043F5F18041A8E00EC884A /* SubmitViewController.m */; };
-		B21B343218051E5B0058AEFB /* ParseGetDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B21B343118051E5B0058AEFB /* ParseGetDataViewController.m */; };
+		B211EC601816683600B53B40 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B211EC5F1816683600B53B40 /* CommentViewController.m */; };
 		B23AB4C8180FFB6A007E1BB8 /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B23AB4C7180FFB6A007E1BB8 /* LogInViewController.m */; };
 		B23AB4D3180FFC4B007E1BB8 /* Exit.png in Resources */ = {isa = PBXBuildFile; fileRef = B23AB4CA180FFC4B007E1BB8 /* Exit.png */; };
 		B23AB4D4180FFC4B007E1BB8 /* ExitDown.png in Resources */ = {isa = PBXBuildFile; fileRef = B23AB4CB180FFC4B007E1BB8 /* ExitDown.png */; };
@@ -84,8 +84,8 @@
 		B2043F571803E99200EC884A /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		B2043F5E18041A8E00EC884A /* SubmitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubmitViewController.h; sourceTree = "<group>"; };
 		B2043F5F18041A8E00EC884A /* SubmitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubmitViewController.m; sourceTree = "<group>"; };
-		B21B343018051E5B0058AEFB /* ParseGetDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseGetDataViewController.h; sourceTree = "<group>"; };
-		B21B343118051E5B0058AEFB /* ParseGetDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseGetDataViewController.m; sourceTree = "<group>"; };
+		B211EC5E1816683600B53B40 /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
+		B211EC5F1816683600B53B40 /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
 		B23AB4C6180FFB6A007E1BB8 /* LogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
 		B23AB4C7180FFB6A007E1BB8 /* LogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogInViewController.m; sourceTree = "<group>"; };
 		B23AB4CA180FFC4B007E1BB8 /* Exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Exit.png; sourceTree = "<group>"; };
@@ -191,6 +191,7 @@
 		09ABC07713A1D52D009C3FCF /* ParseStarterProject */ = {
 			isa = PBXGroup;
 			children = (
+				B211EC4E18165B6C00B53B40 /* Comment */,
 				B23AB4E9181109D3007E1BB8 /* Reachability.h */,
 				B23AB4EA181109D3007E1BB8 /* Reachability.m */,
 				B23AB4E51810F007007E1BB8 /* KeychainItemWrapper.h */,
@@ -203,8 +204,6 @@
 				B24237F617FBF52F0030F468 /* RootViewController.m */,
 				B2043F5E18041A8E00EC884A /* SubmitViewController.h */,
 				B2043F5F18041A8E00EC884A /* SubmitViewController.m */,
-				B21B343018051E5B0058AEFB /* ParseGetDataViewController.h */,
-				B21B343118051E5B0058AEFB /* ParseGetDataViewController.m */,
 				B28A7ECD18064E1E00E8FDE7 /* Annotation.h */,
 				B28A7ECE18064E1E00E8FDE7 /* Annotation.m */,
 				B28A7ED3180696E000E8FDE7 /* DetailViewController.h */,
@@ -243,6 +242,15 @@
 				09ABC07E13A1D52D009C3FCF /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B211EC4E18165B6C00B53B40 /* Comment */ = {
+			isa = PBXGroup;
+			children = (
+				B211EC5E1816683600B53B40 /* CommentViewController.h */,
+				B211EC5F1816683600B53B40 /* CommentViewController.m */,
+			);
+			name = Comment;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -335,9 +343,9 @@
 				B23AB4EB181109D3007E1BB8 /* Reachability.m in Sources */,
 				09ABC07F13A1D52D009C3FCF /* main.m in Sources */,
 				09ABC08213A1D52D009C3FCF /* ParseStarterProjectAppDelegate.m in Sources */,
-				B21B343218051E5B0058AEFB /* ParseGetDataViewController.m in Sources */,
 				B24237F717FBF52F0030F468 /* RootViewController.m in Sources */,
 				B28A7ED5180696E000E8FDE7 /* DetailViewController.m in Sources */,
+				B211EC601816683600B53B40 /* CommentViewController.m in Sources */,
 				B23AB4E71810F007007E1BB8 /* KeychainItemWrapper.m in Sources */,
 				B23AB4DE18100ED3007E1BB8 /* SignUpViewController.m in Sources */,
 			);
