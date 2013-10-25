@@ -25,6 +25,7 @@
 @synthesize allPosts;
 @synthesize mapPinsPlaced;
 
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -75,8 +76,9 @@
 
 
 //map----------------------------------------------------
--(void) locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
-//    NSLog(@"NEW LOCATION!");
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
+    CLLocation *newLocation = [locations lastObject];
+    NSLog(@"didUpdateToLocation! current location is LA:%f LO:%f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
     MKCoordinateRegion  region = mapView.region;
     region.center.latitude = newLocation.coordinate.latitude;
     region.center.longitude = newLocation.coordinate.longitude;
@@ -84,6 +86,7 @@
     region.span.longitudeDelta = mapView.region.span.longitudeDelta;
     [mapView setRegion:region animated:YES];
     [mapView setCenterCoordinate:newLocation.coordinate animated:YES];
+    [locationManager stopUpdatingLocation];
 }
 
 
@@ -182,7 +185,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
                            CLLocationCoordinate2D c = loc.coordinate;
                            photoLatitude   = c.latitude;
                            photoLongitude  = c.longitude;
-                           NSLog(@"photoLibrary LON:%f LAT:%f", photoLatitude, photoLongitude);
+                           NSLog(@"photoLibrary LA:%f LO:%f", photoLatitude, photoLongitude);
                            PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:photoLatitude longitude:photoLongitude];
                            [submitViewController setGeoPoint:geoPoint];
                        }
@@ -192,7 +195,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
         photoLatitude = locationManager.location.coordinate.latitude;
         photoLongitude = locationManager.location.coordinate.longitude;
         PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:photoLatitude longitude:photoLongitude];
-        NSLog(@"geoPoint LON:%f LAT:%f", geoPoint.latitude, geoPoint.longitude);
+        NSLog(@"geoPoint LA:%f LO:%f", geoPoint.latitude, geoPoint.longitude);
         [submitViewController setGeoPoint:geoPoint];
     }
     NSLog(@"push");
@@ -294,6 +297,10 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 //    [mapView setDelegate:self];
 //}
 
+
+- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
+    [self queryForAllPostsNearLocation:locationManager.location];
+}
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
     static NSString *const kAnnotationReuseIdentifier = @"CPAnnotationView";
