@@ -14,7 +14,7 @@
 
 @implementation DetailViewController
 @synthesize annotation;
-@synthesize commentArray;
+@synthesize commentObjectArray;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -78,11 +78,15 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    CommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     if (nil == cell){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[CommentTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    cell.textLabel.text = [commentArray objectAtIndex:indexPath.row];
+    //user name
+    cell.userNameLabel.text =[[[commentObjectArray objectAtIndex:indexPath.row] objectForKey:@"user"] objectForKey:kPAWParseUsernameKey];
+//    NSLog(@"%@", [[commentObjectArray objectAtIndex:indexPath.row] objectForKey:@"user"]);
+    //comment
+    cell.commentLabel.text = [[commentObjectArray objectAtIndex:indexPath.row] objectForKey:@"comment"];
     return cell;
 }
 
@@ -91,7 +95,7 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return commentArray.count;
+    return commentObjectArray.count;
 }
 
 -(IBAction)comment{
@@ -113,16 +117,14 @@
 - (void)retrieveComment{
     PFQuery *query = [PFQuery queryWithClassName:@"Comment"];
     [query whereKey:@"postObjectId" equalTo:[annotation.object objectId]];
-    commentArray = [NSMutableArray array];
+    [query includeKey:kPAWParseUserKey];
+    commentObjectArray = [NSMutableArray array];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             // The find succeeded.
             NSLog(@"Successfully retrieved %d scores.", objects.count);
             // Do something with the found objects
-            for (PFObject *object in objects) {
-                NSLog(@"%@", object.objectId);
-                [commentArray addObject:[object objectForKey:@"comment"]];
-            }
+            [commentObjectArray addObjectsFromArray:objects];
             [commentTableView reloadData];
         } else {
             // Log details of the failure

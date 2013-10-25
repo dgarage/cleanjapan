@@ -40,9 +40,9 @@
 	self.geopoint = [anObject objectForKey:kPAWParseLocationKey];
 	self.user = [anObject objectForKey:kPAWParseUserKey];
     [anObject fetchIfNeeded];
-	NSString *aTitle = [anObject objectForKey:kPAWParseTitleKey];
+	NSString *aTitle = [anObject objectForKey:kPAWParseTitleKey];//comment
     NSString *aSubtitle;
-    aSubtitle = [[anObject objectForKey:kPAWParseUserKey] objectForKey:kPAWParseUsernameKey];
+    aSubtitle = [[anObject objectForKey:kPAWParseUserKey] objectForKey:kPAWParseUsernameKey];//username
     CLLocationCoordinate2D aCoordinate = CLLocationCoordinate2DMake(self.geopoint.latitude, self.geopoint.longitude);
 //    UIImage *anImage = [anObject objectForKey:kPAWParseImageKey];
     return [self initWithCoordinate:aCoordinate andTitle:aTitle andSubtitle:aSubtitle];
