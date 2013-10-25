@@ -218,6 +218,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
                nearGeoPoint:centerGeoPoint
            withinKilometers:searchDistanceKilometers];
     [query includeKey:kPAWParseUserKey];
+    [query orderByDescending:@"createdAt"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error){
         if (error) {
             NSLog(@"Error in geo query!");

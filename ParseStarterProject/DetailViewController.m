@@ -130,6 +130,7 @@
     PFQuery *query = [PFQuery queryWithClassName:@"Comment"];
     [query whereKey:@"postObjectId" equalTo:[annotation.object objectId]];
     [query includeKey:kPAWParseUserKey];
+    [query orderByAscending:@"createdAt"];
     commentObjectArray = [NSMutableArray array];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
