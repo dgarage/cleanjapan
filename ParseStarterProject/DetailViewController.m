@@ -65,7 +65,7 @@
 }
 
 - (void)viewDidLayoutSubviews{
-    [scrollView setContentSize:scrollView.frame.size];
+//    [scrollView setContentSize:scrollView.frame.size];
     [backgroundScrollView setContentSize:self.view.frame.size];
 }
 
@@ -185,5 +185,11 @@
     }
 }
 
+-(IBAction)tableHeaderViewButtonTapped{
+    NSLog(@"photo show");
+    PhotoViewController *photoViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"PhotoViewController"];
+    [photoViewController setObject:annotation.object];
+    [[self navigationController] pushViewController:photoViewController animated:YES];
+}
 
 @end

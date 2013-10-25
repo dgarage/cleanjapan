@@ -10,9 +10,8 @@
 #import <Parse/Parse.h>
 #import "Annotation.h"
 #import "CommentTableViewCell.h"
-
-@interface DetailViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, UITextViewDelegate>{
-    IBOutlet UIScrollView *scrollView;
+#import "PhotoViewController.h"
+@interface DetailViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UINavigationControllerDelegate>{
     IBOutlet UIScrollView *backgroundScrollView;
     IBOutlet UITableView *commentTableView;
     IBOutlet UITextView *commentTextView;
@@ -21,6 +20,7 @@
     IBOutlet UIButton *commentButton;
 }
 - (IBAction)comment;
+- (IBAction)tableHeaderViewButtonTapped;
 @property (nonatomic, retain) Annotation *annotation;
 @property (nonatomic, retain) NSMutableArray *commentObjectArray;
 
