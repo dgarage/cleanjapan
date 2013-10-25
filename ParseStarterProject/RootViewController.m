@@ -70,6 +70,7 @@
     //keychain reset
 //    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"cleanjapan" accessGroup:nil];
 //    [keychainItem resetKeychainItem];
+    [self queryForAllPostsNearLocation:locationManager.location];
 }
 
 

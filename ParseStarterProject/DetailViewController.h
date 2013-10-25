@@ -17,6 +17,8 @@
     IBOutlet UITextView *commentTextView;
     IBOutlet UIButton *tableHeaderViewButton;
     IBOutlet UITextView *tableHeaderViewTextView;
+    IBOutlet UILabel *tableHeaderViewUserNameLabel;
+    IBOutlet UILabel *tableHeaderViewCreatedAtLabel;
     IBOutlet UIButton *commentButton;
 }
 - (IBAction)comment;

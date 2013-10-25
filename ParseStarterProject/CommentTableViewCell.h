@@ -11,4 +11,5 @@
 @interface CommentTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *commentLabel;
+@property (weak, nonatomic) IBOutlet UILabel *createdAtLabel;
 @end

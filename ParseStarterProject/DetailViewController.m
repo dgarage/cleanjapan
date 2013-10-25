@@ -38,6 +38,12 @@
             [tableHeaderViewButton setBackgroundImage:image forState:UIControlStateNormal];
         }
     }];
+    tableHeaderViewUserNameLabel.text = [[annotation.object objectForKey:@"user"] objectForKey:@"username"];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm"];
+    NSDate *date = [annotation.object createdAt];
+    NSString *theDate = [dateFormatter stringFromDate:date];
+    tableHeaderViewCreatedAtLabel.text = theDate;
 //    UIImage *image = [UIImage imageWithData:[annotation.object objectForKey:@"image"]];
     //comment
     commentTableView.delegate = self;
@@ -87,6 +93,12 @@
 //    NSLog(@"%@", [[commentObjectArray objectAtIndex:indexPath.row] objectForKey:@"user"]);
     //comment
     cell.commentLabel.text = [[commentObjectArray objectAtIndex:indexPath.row] objectForKey:@"comment"];
+//    cell.createdAtLabel.text =
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm"];
+    NSDate *date = [[commentObjectArray objectAtIndex:indexPath.row] createdAt];
+    NSString *theDate = [dateFormatter stringFromDate:date];
+    cell.createdAtLabel.text = theDate;
     return cell;
 }
 
