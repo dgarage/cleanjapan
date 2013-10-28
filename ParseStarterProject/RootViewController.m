@@ -74,6 +74,15 @@
     [self queryForAllPostsNearLocation:locationManager.location];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    NSLog(@"viewWillAppear");
+    NSLog(@"%@", [[PFUser currentUser] objectForKey:@"username"]);
+    if ([PFAnonymousUtils isLinkedWithUser:[PFUser currentUser]]) {
+        barButtonItem.title = @"Guest";
+    } else {
+        barButtonItem.title = [[PFUser currentUser] objectForKey:@"username"];
+    }
+}
 
 //map----------------------------------------------------
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
@@ -344,6 +353,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 -(IBAction)check{
     NSLog(@"check");
     NSLog(@"reachable: %d", [self reachable]);
+    NSLog(@"current user:%@", [PFUser currentUser]);
     [self queryForAllPostsNearLocation:locationManager.location];
 }
 
@@ -378,12 +388,11 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     
     LogInViewController *logInViewController = [[LogInViewController alloc] init];
     logInViewController.delegate = logInViewController;
-    logInViewController.facebookPermissions = @[@"friends_about_me"];
-    logInViewController.fields = PFLogInFieldsUsernameAndPassword | PFLogInFieldsTwitter | PFLogInFieldsFacebook | PFLogInFieldsSignUpButton | PFLogInFieldsDismissButton;
+    logInViewController.fields = PFLogInFieldsUsernameAndPassword | PFLogInFieldsLogInButton | PFLogInFieldsSignUpButton | PFLogInFieldsDismissButton;
     
     SignUpViewController *signUpViewController = [[SignUpViewController alloc] init];
     signUpViewController.delegate = signUpViewController;
-    signUpViewController.fields = PFSignUpFieldsDefault | PFSignUpFieldsAdditional;
+    signUpViewController.fields = PFSignUpFieldsDefault;
     logInViewController.signUpController = signUpViewController;
     
     [self presentViewController:logInViewController animated:YES completion:nil];

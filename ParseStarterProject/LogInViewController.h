@@ -7,7 +7,8 @@
 //
 
 #import <Parse/Parse.h>
-
+#import "KeychainItemWrapper.h"
+#import <Security/Security.h>
 @interface LogInViewController : PFLogInViewController <PFLogInViewControllerDelegate>
 
 @end

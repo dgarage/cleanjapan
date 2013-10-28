@@ -79,10 +79,11 @@
     
     // Set frame for elements
     [self.logInView.dismissButton setFrame:CGRectMake(10.0f, 10.0f, 87.5f, 45.5f)];
+    [self.logInView.logInButton setFrame:CGRectMake(35.0f,270.0f, 250.0f, 40.0f)];
     [self.logInView.logo setFrame:CGRectMake(66.5f, 70.0f, 187.0f, 58.5f)];
     [self.logInView.facebookButton setFrame:CGRectMake(35.0f, 307.0f, 120.0f, 40.0f)];
     [self.logInView.twitterButton setFrame:CGRectMake(35.0f+130.0f, 307.0f, 120.0f, 40.0f)];
-    [self.logInView.signUpButton setFrame:CGRectMake(35.0f, 385.0f, 250.0f, 40.0f)];
+    [self.logInView.signUpButton setFrame:CGRectMake(35.0f, 405.0f, 250.0f, 40.0f)];
     [self.logInView.usernameField setFrame:CGRectMake(35.0f, 145.0f, 250.0f, 50.0f)];
     [self.logInView.passwordField setFrame:CGRectMake(35.0f, 195.0f, 250.0f, 50.0f)];
     [self.fieldsBackground setFrame:CGRectMake(35.0f, 145.0f, 250.0f, 100.0f)];
@@ -100,6 +101,14 @@
 
 // Sent to the delegate when a PFUser is logged in.
 - (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
+    NSLog(@"success log in!");
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"cleanjapan" accessGroup:nil];
+    NSLog(@"user1: %@", self.logInView.usernameField.text);
+    NSLog(@"pass1: %@", self.logInView.passwordField.text);
+    [keychainItem setObject:self.logInView.usernameField.text forKey:(__bridge id)(kSecValueData)];
+    [keychainItem setObject:self.logInView.passwordField.text forKey:(__bridge id)(kSecAttrAccount)];
+    NSLog(@"pass2: %@", [keychainItem objectForKey:(__bridge id)(kSecValueData)]);
+    NSLog(@"pass2: %@", [keychainItem objectForKey:(__bridge id)(kSecAttrAccount)]);
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
@@ -112,9 +121,6 @@
 - (void)logInViewControllerDidCancelLogIn:(PFLogInViewController *)logInController {
     [self.navigationController popViewControllerAnimated:YES];
 }
-
-
-
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
