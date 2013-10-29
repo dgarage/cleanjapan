@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
-@interface CommentTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *commentLabel;
-@property (weak, nonatomic) IBOutlet UILabel *createdAtLabel;
+@interface CommentTableViewCell : UITableViewCell{
+//    __strong UIImageView *_userIconView;
+    UILabel *userNameLabel;
+    UILabel *commentLabel;
+    UILabel *createdAtLabel;
+}
+- (void)setupCommentObject:(PFObject *)commentObject;
 @end

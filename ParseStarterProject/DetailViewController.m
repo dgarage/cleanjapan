@@ -70,6 +70,8 @@
     commentTextView.delegate = self;
     commentButton.enabled = false;
     [commentTableView setNeedsLayout];
+    NSLog(@"takenoko");
+    getHeightCell = [[CommentTableViewCell alloc] init];
 }
 
 - (void)viewDidLayoutSubviews{
@@ -90,18 +92,8 @@
     if (nil == cell){
         cell = [[CommentTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    //user name
-    cell.userNameLabel.text =[[[commentObjectArray objectAtIndex:indexPath.row] objectForKey:@"user"] objectForKey:kPAWParseUsernameKey];
-    //comment
-    cell.commentLabel.text = [[commentObjectArray objectAtIndex:indexPath.row] objectForKey:@"comment"];
+    [cell setupCommentObject:[commentObjectArray objectAtIndex:indexPath.row]];
 
-    //date
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm"];
-    NSDate *date = [[commentObjectArray objectAtIndex:indexPath.row] createdAt];
-    NSString *theDate = [dateFormatter stringFromDate:date];
-    cell.createdAtLabel.text = theDate;
-    
     //    CGRect commentLabelFrame = [cell.commentLabel frame];
     //    NSLog(@"pos: %f %f", commentLabelFrame.origin.x, commentLabelFrame.origin.y);
     //    commentLabelFrame.size = CGSizeMake(280, CGFLOAT_MAX);
@@ -125,24 +117,32 @@
     
 //    [getHeightCell]
     //+45はマージン
-    PFObject *cellObject = [commentObjectArray objectAtIndex:indexPath.row];
-    float margin = 28;
-    float cellHeight =  [self getCellHeight:[[cellObject objectForKey:@"user"] objectForKey:@"username"] comment:[cellObject objectForKey:@"comment"] createdAt:[cellObject createdAt]] + margin;
-    return cellHeight;
+    [getHeightCell setupCommentObject:[commentObjectArray objectAtIndex:indexPath.row]];
+    CGSize size;
+    size.width = commentTableView.frame.size.width;
+    size.height = CGFLOAT_MAX;
+    size = [getHeightCell sizeThatFits:size];
+    NSLog(@"size:%f", size.height);
+//    
+//    
+//    PFObject *cellObject = [commentObjectArray objectAtIndex:indexPath.row];
+//    float cellHeight =  [self getCellHeight:[[cellObject objectForKey:@"user"] objectForKey:@"username"] comment:[cellObject objectForKey:@"comment"] createdAt:[cellObject createdAt]];
+    
+    return size.height;
 }
 
 - (float)getCellHeight:(NSString*)userName comment:(NSString*)comment createdAt:(NSDate*)createdAt{
-    CGSize userNameLabelSize = [userName sizeWithFont:[UIFont boldSystemFontOfSize:15.0]
+    CGSize userNameLabelSize = [userName sizeWithFont:[UIFont boldSystemFontOfSize:16.0]
                                                constrainedToSize:CGSizeMake(280, CGFLOAT_MAX)
                                                    lineBreakMode:NSLineBreakByWordWrapping];
-    CGSize commentLabelSize = [comment sizeWithFont:[UIFont systemFontOfSize:15.0]
+    CGSize commentLabelSize = [comment sizeWithFont:[UIFont systemFontOfSize:16.0]
                                    constrainedToSize:CGSizeMake(280, CGFLOAT_MAX)
                                        lineBreakMode:NSLineBreakByWordWrapping];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm"];
     NSString *theDate = [dateFormatter stringFromDate:createdAt];
-    CGSize createdAtLabelSize = [theDate sizeWithFont:[UIFont systemFontOfSize:10.0]
+    CGSize createdAtLabelSize = [theDate sizeWithFont:[UIFont systemFontOfSize:14.0]
                                       constrainedToSize:CGSizeMake(280, CGFLOAT_MAX)
                                           lineBreakMode:NSLineBreakByWordWrapping];
     float cellHeight = userNameLabelSize.height+commentLabelSize.height+createdAtLabelSize.height;

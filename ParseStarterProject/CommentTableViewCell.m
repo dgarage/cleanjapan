@@ -12,15 +12,54 @@
 #import "CommentTableViewCell.h"
 
 @implementation CommentTableViewCell
-@synthesize commentLabel;
-@synthesize createdAtLabel;
-@synthesize userNameLabel;
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
+    NSLog(@"check initWithStyle kinoko");
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        NSLog(@"initWithStyle");
         // Initialization code
+        userNameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        userNameLabel.font = [UIFont boldSystemFontOfSize:16.0f];
+        userNameLabel.numberOfLines = 0;
+        [self.contentView addSubview:userNameLabel];
+        
+        commentLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        commentLabel.font = [UIFont systemFontOfSize:16.0f];
+        commentLabel.numberOfLines = 0;
+        [self.contentView addSubview:commentLabel];
+        
+        createdAtLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        createdAtLabel.font = [UIFont systemFontOfSize:14.0f];
+        createdAtLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        createdAtLabel.textColor = [UIColor grayColor];
+        [self.contentView addSubview:createdAtLabel];
     }
+    return self;
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder {
+    if ( !(self = [super initWithCoder:aDecoder]) ) return nil;
+    
+    NSLog(@"initWithCoder kinoko");
+    // Initialization code
+    userNameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    userNameLabel.font = [UIFont boldSystemFontOfSize:16.0f];
+    userNameLabel.numberOfLines = 0;
+    [self.contentView addSubview:userNameLabel];
+    
+    commentLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    commentLabel.font = [UIFont systemFontOfSize:16.0f];
+    commentLabel.numberOfLines = 0;
+    [self.contentView addSubview:commentLabel];
+    
+    createdAtLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    createdAtLabel.font = [UIFont systemFontOfSize:14.0f];
+    createdAtLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    createdAtLabel.textColor = [UIColor grayColor];
+    [self.contentView addSubview:createdAtLabel];
+    
     return self;
 }
 
@@ -38,6 +77,15 @@
     [self sizeThatFits:bounds.size withLayout:YES];
 }
 
+- (void)setupCommentObject:(PFObject *)commentObject
+{
+    userNameLabel.text = [[commentObject objectForKey:@"user"] objectForKey:@"username"];
+    commentLabel.text = [commentObject objectForKey:@"comment"];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm"];
+    NSString *theDate = [dateFormatter stringFromDate:[commentObject createdAt]];
+    createdAtLabel.text = theDate;
+}
 
 /**
  * Override UIView method
