@@ -104,7 +104,7 @@
     // アクションシートを作る
     UIActionSheet*  sheet;
     sheet = [[UIActionSheet alloc]
-             initWithTitle:@"Select Soruce Type"
+             initWithTitle:@"Select Source Type"
              delegate:self
              cancelButtonTitle:@"Cancel"
              destructiveButtonTitle:nil
@@ -312,8 +312,10 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+    if (annotation == mapView.userLocation){
+        return nil; //default blue dot
+    }
     static NSString *const kAnnotationReuseIdentifier = @"CPAnnotationView";
-    
     MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:kAnnotationReuseIdentifier];
     if (annotationView == nil) {
         annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:kAnnotationReuseIdentifier];
