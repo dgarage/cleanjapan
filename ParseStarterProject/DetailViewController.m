@@ -21,6 +21,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        
     }
     return self;
 }
@@ -68,6 +69,7 @@
     [self retrieveComment];
     commentTextView.delegate = self;
     commentButton.enabled = false;
+    [commentTableView setNeedsLayout];
 }
 
 - (void)viewDidLayoutSubviews{
@@ -90,16 +92,61 @@
     }
     //user name
     cell.userNameLabel.text =[[[commentObjectArray objectAtIndex:indexPath.row] objectForKey:@"user"] objectForKey:kPAWParseUsernameKey];
-//    NSLog(@"%@", [[commentObjectArray objectAtIndex:indexPath.row] objectForKey:@"user"]);
     //comment
     cell.commentLabel.text = [[commentObjectArray objectAtIndex:indexPath.row] objectForKey:@"comment"];
-//    cell.createdAtLabel.text =
+
+    //date
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm"];
     NSDate *date = [[commentObjectArray objectAtIndex:indexPath.row] createdAt];
     NSString *theDate = [dateFormatter stringFromDate:date];
     cell.createdAtLabel.text = theDate;
+    
+    //    CGRect commentLabelFrame = [cell.commentLabel frame];
+    //    NSLog(@"pos: %f %f", commentLabelFrame.origin.x, commentLabelFrame.origin.y);
+    //    commentLabelFrame.size = CGSizeMake(280, CGFLOAT_MAX);
+    //    [cell.commentLabel setFrame:commentLabelFrame];
+    //    [cell.commentLabel sizeToFit];
+    //    [cell.commentLabel setFrame:CGRectMake(commentLabelFrame.origin.x, commentLabelFrame.origin.y, cell.commentLabel.frame.size.width, cell.commentLabel.frame.size.height)];
+    
     return cell;
+}
+
+
+////セルの高さをUILabelに合わせて設定
+- (CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath {
+    
+//    NSString *newcellHeight = [tweetTextArray objectAtIndex:indexPath.row];
+//	//CGSizeMakeの5000は大きければ適当な値でOK
+//    CGSize size = [newcellHeight sizeWithFont:[UIFont systemFontOfSize:12.0]
+//                            constrainedToSize:CGSizeMake(170, 5000)
+//                                lineBreakMode:NSLineBreakByWordWrapping];
+    
+    
+//    [getHeightCell]
+    //+45はマージン
+    PFObject *cellObject = [commentObjectArray objectAtIndex:indexPath.row];
+    float margin = 28;
+    float cellHeight =  [self getCellHeight:[[cellObject objectForKey:@"user"] objectForKey:@"username"] comment:[cellObject objectForKey:@"comment"] createdAt:[cellObject createdAt]] + margin;
+    return cellHeight;
+}
+
+- (float)getCellHeight:(NSString*)userName comment:(NSString*)comment createdAt:(NSDate*)createdAt{
+    CGSize userNameLabelSize = [userName sizeWithFont:[UIFont boldSystemFontOfSize:15.0]
+                                               constrainedToSize:CGSizeMake(280, CGFLOAT_MAX)
+                                                   lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize commentLabelSize = [comment sizeWithFont:[UIFont systemFontOfSize:15.0]
+                                   constrainedToSize:CGSizeMake(280, CGFLOAT_MAX)
+                                       lineBreakMode:NSLineBreakByWordWrapping];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm"];
+    NSString *theDate = [dateFormatter stringFromDate:createdAt];
+    CGSize createdAtLabelSize = [theDate sizeWithFont:[UIFont systemFontOfSize:10.0]
+                                      constrainedToSize:CGSizeMake(280, CGFLOAT_MAX)
+                                          lineBreakMode:NSLineBreakByWordWrapping];
+    float cellHeight = userNameLabelSize.height+commentLabelSize.height+createdAtLabelSize.height;
+    return cellHeight;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{

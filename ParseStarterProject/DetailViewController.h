@@ -20,6 +20,7 @@
     IBOutlet UILabel *tableHeaderViewUserNameLabel;
     IBOutlet UILabel *tableHeaderViewCreatedAtLabel;
     IBOutlet UIButton *commentButton;
+    CommentTableViewCell *getHeightCell;
 }
 - (IBAction)comment;
 - (IBAction)tableHeaderViewButtonTapped;
