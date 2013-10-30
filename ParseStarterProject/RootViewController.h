@@ -25,9 +25,6 @@
     IBOutlet UIBarButtonItem *barButtonItem;
 }
 -(IBAction)showActionSheet;
-//for debug
--(IBAction)showDebugView;
--(IBAction)check;
 @end
 
 

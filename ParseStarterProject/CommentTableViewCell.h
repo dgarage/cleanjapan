@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 @interface CommentTableViewCell : UITableViewCell{
-//    __strong UIImageView *_userIconView;
+    UIImageView *userIconImageView;
     UILabel *userNameLabel;
     UILabel *commentLabel;
     UILabel *createdAtLabel;

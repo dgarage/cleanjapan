@@ -12,7 +12,6 @@
 #import "RootViewController.h"
 #import <Parse/Parse.h>
 #import "SubmitViewController.h"
-#import "CommentViewController.h"
 #import "LogInViewController.h"
 #import "SignUpViewController.h"
 
@@ -352,14 +351,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     return resizedImage;
 }
 
--(IBAction)check{
-    NSLog(@"check");
-    NSLog(@"reachable: %d", [self reachable]);
-    NSLog(@"current user:%@", [PFUser currentUser]);
-    [self queryForAllPostsNearLocation:locationManager.location];
-}
-
-
 - (void)imagePickerControllerDidCancel:(UIImagePickerController*)picker
 {
     // イメージピッカーを隠す
@@ -370,11 +361,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
--(IBAction)showDebugView{
-    CommentViewController *commentViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"CommentViewController"];
-    [self.navigationController pushViewController:commentViewController animated:YES];
 }
 
 //below is for test

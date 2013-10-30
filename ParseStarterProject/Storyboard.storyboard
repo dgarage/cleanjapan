@@ -37,44 +37,12 @@
                                     <action selector="showActionSheet" destination="eoF-cG-6dn" eventType="touchUpInside" id="gbg-B9-Vw1"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hr4-TC-15P">
-                                <rect key="frame" x="218" y="462" width="100" height="100"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.56221648189999995" green="0.77923387099999997" blue="0.96260710689999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="kte-ZQ-hCH"/>
-                                </constraints>
-                                <state key="normal" title="Debug">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="showDebugView" destination="eoF-cG-6dn" eventType="touchUpInside" id="XBf-eC-dKo"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y6D-Q6-Gd1">
-                                <rect key="frame" x="2" y="462" width="100" height="100"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.56221648189999995" green="0.77923387099999997" blue="0.96260710689999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="XzR-Zo-1i4"/>
-                                </constraints>
-                                <state key="normal" title="Check">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="check" destination="eoF-cG-6dn" eventType="touchUpInside" id="2nw-LI-Gsj"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="R8E-vw-Ff7" firstAttribute="top" secondItem="EBt-cf-4ba" secondAttribute="bottom" constant="8" id="6UT-l3-WNa"/>
                             <constraint firstItem="EBt-cf-4ba" firstAttribute="top" secondItem="tuK-Zs-eGd" secondAttribute="top" id="C7T-nw-2Y3"/>
                             <constraint firstAttribute="bottom" secondItem="R8E-vw-Ff7" secondAttribute="bottom" constant="6" id="KAt-A0-ejj"/>
-                            <constraint firstItem="Hr4-TC-15P" firstAttribute="top" secondItem="EBt-cf-4ba" secondAttribute="bottom" constant="8" id="Nc0-z8-cI4"/>
-                            <constraint firstItem="vZr-Es-Tx6" firstAttribute="top" secondItem="Hr4-TC-15P" secondAttribute="bottom" constant="6" id="eqJ-zL-MKl"/>
-                            <constraint firstItem="vZr-Es-Tx6" firstAttribute="top" secondItem="Y6D-Q6-Gd1" secondAttribute="bottom" constant="6" id="pYp-75-NWN"/>
-                            <constraint firstItem="Y6D-Q6-Gd1" firstAttribute="top" secondItem="EBt-cf-4ba" secondAttribute="bottom" constant="8" id="qDT-Xw-Rh4"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="x4c-eI-AvD">
@@ -338,7 +306,6 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>

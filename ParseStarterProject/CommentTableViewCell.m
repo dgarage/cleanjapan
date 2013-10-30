@@ -15,11 +15,12 @@
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    NSLog(@"check initWithStyle kinoko");
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        NSLog(@"initWithStyle");
-        // Initialization code
+        NSLog(@"CommentTableViewCell initWithStyle");
+        userIconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+        [self.contentView addSubview:userIconImageView];
+        
         userNameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         userNameLabel.font = [UIFont boldSystemFontOfSize:16.0f];
         userNameLabel.numberOfLines = 0;
@@ -41,9 +42,10 @@
 
 -(id)initWithCoder:(NSCoder *)aDecoder {
     if ( !(self = [super initWithCoder:aDecoder]) ) return nil;
+    NSLog(@"CommentTableViewCell initWithCoder");
+    userIconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+    [self.contentView addSubview:userIconImageView];
     
-    NSLog(@"initWithCoder kinoko");
-    // Initialization code
     userNameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     userNameLabel.font = [UIFont boldSystemFontOfSize:16.0f];
     userNameLabel.numberOfLines = 0;
@@ -79,6 +81,20 @@
 
 - (void)setupCommentObject:(PFObject *)commentObject
 {
+    int random = arc4random_uniform(3);
+    switch (random) {
+        case 0:
+            userIconImageView.image = [UIImage imageNamed:@"dummy_img1.png"];
+            break;
+        case 1:
+            userIconImageView.image = [UIImage imageNamed:@"dummy_img2.png"];
+            break;
+        case 2:
+            userIconImageView.image = [UIImage imageNamed:@"dummy_img3.png"];
+            break;
+        default:
+            break;
+    }
     userNameLabel.text = [[commentObject objectForKey:@"user"] objectForKey:@"username"];
     commentLabel.text = [commentObject objectForKey:@"comment"];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -107,7 +123,7 @@
     userIconViewFrame.size.width = STUserIconSize;
     userIconViewFrame.size.height = STUserIconSize;
     if (withLayout) {
-//        _userIconView.frame = userIconViewFrame;
+        userIconImageView.frame = userIconViewFrame;
     }
     CGFloat minHeight = userIconViewFrame.origin.y + userIconViewFrame.size.height + STMargin;
     
