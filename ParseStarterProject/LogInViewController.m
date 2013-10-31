@@ -83,6 +83,7 @@
     [self.logInView.logo setFrame:CGRectMake(66.5f, 70.0f, 187.0f, 58.5f)];
     [self.logInView.facebookButton setFrame:CGRectMake(35.0f, 307.0f, 120.0f, 40.0f)];
     [self.logInView.twitterButton setFrame:CGRectMake(35.0f+130.0f, 307.0f, 120.0f, 40.0f)];
+    [self.logInView.signUpLabel setFrame:CGRectMake(35.0f, 370.0f, 250.0f, 40.0f)];
     [self.logInView.signUpButton setFrame:CGRectMake(35.0f, 405.0f, 250.0f, 40.0f)];
     [self.logInView.usernameField setFrame:CGRectMake(35.0f, 145.0f, 250.0f, 50.0f)];
     [self.logInView.passwordField setFrame:CGRectMake(35.0f, 195.0f, 250.0f, 50.0f)];
