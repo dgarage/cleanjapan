@@ -167,6 +167,8 @@
         if (succeeded) {
             NSLog(@"comment upload done!");
             [commentTextView setText:@""];
+            commentButton.enabled = false;
+            [self dismissKeyboard];
             [self retrieveComment];
         }
     }];
