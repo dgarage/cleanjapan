@@ -29,8 +29,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
     NSLog(@"annotation objectID: %@", [annotation.object objectId]);
+    self.automaticallyAdjustsScrollViewInsets = false;
     tableHeaderViewTextView.text = [NSString stringWithFormat:@"%@", [annotation.object objectForKey:@"title"]];
     PFFile *imageFile = [annotation.object objectForKey:@"image"];
     [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
@@ -75,8 +75,7 @@
 }
 
 - (void)viewDidLayoutSubviews{
-//    [scrollView setContentSize:scrollView.frame.size];
-    [backgroundScrollView setContentSize:self.view.frame.size];
+    [backgroundScrollView setContentSize:backgroundScrollView.frame.size];
 }
 
 - (void)didReceiveMemoryWarning
