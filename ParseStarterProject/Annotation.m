@@ -42,7 +42,14 @@
     [anObject fetchIfNeeded];
 	NSString *aTitle = [anObject objectForKey:kPAWParseTitleKey];//comment
     NSString *aSubtitle;
-    aSubtitle = [[anObject objectForKey:kPAWParseUserKey] objectForKey:kPAWParseUsernameKey];//username
+    //check the post was by anonymous or not
+    if ([[anObject objectForKey:@"user"] objectForKey:@"email"] == NULL) {
+        //anonymous user's post
+        aSubtitle = [@"Guest ID:" stringByAppendingString:[[anObject objectForKey:@"user"] objectId]];
+    }else{
+        //not anonymous's post
+        aSubtitle = [[anObject objectForKey:kPAWParseUserKey] objectForKey:kPAWParseUsernameKey];//username
+    }
     CLLocationCoordinate2D aCoordinate = CLLocationCoordinate2DMake(self.geopoint.latitude, self.geopoint.longitude);
 //    UIImage *anImage = [anObject objectForKey:kPAWParseImageKey];
     return [self initWithCoordinate:aCoordinate andTitle:aTitle andSubtitle:aSubtitle];

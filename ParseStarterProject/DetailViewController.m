@@ -39,7 +39,14 @@
             [tableHeaderViewButton setBackgroundImage:image forState:UIControlStateNormal];
         }
     }];
-    tableHeaderViewUserNameLabel.text = [[annotation.object objectForKey:@"user"] objectForKey:@"username"];
+    //check the post was by anonymous or not
+    if ([[annotation.object objectForKey:@"user"] objectForKey:@"email"] == NULL) {
+        //anonymous user's post
+        tableHeaderViewUserNameLabel.text = [@"Guest ID:" stringByAppendingString:[[annotation.object objectForKey:@"user"] objectId]];
+    }else{
+        //not anonymous's post
+        tableHeaderViewUserNameLabel.text = [[annotation.object objectForKey:@"user"] objectForKey:@"username"];
+    }
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm"];
     NSDate *date = [annotation.object createdAt];

@@ -95,7 +95,14 @@
         default:
             break;
     }
-    userNameLabel.text = [[commentObject objectForKey:@"user"] objectForKey:@"username"];
+    //check the post was by anonymous or not
+    if ([[commentObject objectForKey:@"user"] objectForKey:@"email"] == NULL) {
+        //anonymous user's post
+        userNameLabel.text = [@"Guest ID:" stringByAppendingString:[[commentObject objectForKey:@"user"] objectId]];
+    }else{
+        //not anonymous's post
+        userNameLabel.text = [[commentObject objectForKey:@"user"] objectForKey:@"username"];
+    }
     commentLabel.text = [commentObject objectForKey:@"comment"];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm"];
