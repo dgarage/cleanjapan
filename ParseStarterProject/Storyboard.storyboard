@@ -17,15 +17,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="EBt-cf-4ba">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="EBt-cf-4ba">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="454"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R8E-vw-Ff7">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R8E-vw-Ff7">
                                 <rect key="frame" x="110" y="462" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="NJL-e2-2gD"/>
                                     <constraint firstAttribute="height" constant="100" id="zVh-OH-Sii"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
@@ -43,6 +44,9 @@
                             <constraint firstItem="R8E-vw-Ff7" firstAttribute="top" secondItem="EBt-cf-4ba" secondAttribute="bottom" constant="8" id="6UT-l3-WNa"/>
                             <constraint firstItem="EBt-cf-4ba" firstAttribute="top" secondItem="tuK-Zs-eGd" secondAttribute="top" id="C7T-nw-2Y3"/>
                             <constraint firstAttribute="bottom" secondItem="R8E-vw-Ff7" secondAttribute="bottom" constant="6" id="KAt-A0-ejj"/>
+                            <constraint firstItem="EBt-cf-4ba" firstAttribute="leading" secondItem="tuK-Zs-eGd" secondAttribute="leading" id="fhM-tS-KoH"/>
+                            <constraint firstAttribute="trailing" secondItem="EBt-cf-4ba" secondAttribute="trailing" id="hsH-tG-NDW"/>
+                            <constraint firstItem="EBt-cf-4ba" firstAttribute="centerX" secondItem="R8E-vw-Ff7" secondAttribute="centerX" id="sOF-el-2yi"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="x4c-eI-AvD">
@@ -181,11 +185,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fn4-2g-GDj">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fn4-2g-GDj">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="85" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Eeq-3S-kot">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="85" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Eeq-3S-kot">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="520"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -241,14 +245,18 @@
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0TI-Gs-d5S">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0TI-Gs-d5S">
                                         <rect key="frame" x="0.0" y="528" width="260" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="260" id="c70-Mb-5hA"/>
+                                            <constraint firstAttribute="height" constant="40" id="etL-Es-wAB"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="roW-7A-xT2">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="roW-7A-xT2">
                                         <rect key="frame" x="261" y="528" width="59" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.0" green="0.80522303429999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -262,13 +270,28 @@
                                     </button>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="Eeq-3S-kot" firstAttribute="trailing" secondItem="roW-7A-xT2" secondAttribute="trailing" id="68z-zd-t5q"/>
+                                    <constraint firstAttribute="trailing" secondItem="Eeq-3S-kot" secondAttribute="trailing" id="72h-7R-O4x"/>
+                                    <constraint firstItem="0TI-Gs-d5S" firstAttribute="leading" secondItem="fn4-2g-GDj" secondAttribute="leading" id="9Tc-5c-ROw"/>
                                     <constraint firstAttribute="bottom" secondItem="roW-7A-xT2" secondAttribute="bottom" id="AUf-ve-wEC"/>
+                                    <constraint firstItem="Eeq-3S-kot" firstAttribute="centerX" secondItem="fn4-2g-GDj" secondAttribute="centerX" id="FRO-kp-iVc"/>
+                                    <constraint firstItem="roW-7A-xT2" firstAttribute="leading" secondItem="0TI-Gs-d5S" secondAttribute="trailing" constant="1" id="Q2U-wQ-DgX"/>
+                                    <constraint firstItem="0TI-Gs-d5S" firstAttribute="top" secondItem="fn4-2g-GDj" secondAttribute="top" constant="528" id="XmK-sU-CTG"/>
                                     <constraint firstItem="Eeq-3S-kot" firstAttribute="top" secondItem="fn4-2g-GDj" secondAttribute="top" id="e66-wc-Utf"/>
                                     <constraint firstAttribute="bottom" secondItem="0TI-Gs-d5S" secondAttribute="bottom" id="fhz-pW-bQx"/>
+                                    <constraint firstAttribute="trailing" secondItem="0TI-Gs-d5S" secondAttribute="trailing" constant="60" id="gaC-RG-yDo"/>
+                                    <constraint firstItem="0TI-Gs-d5S" firstAttribute="leading" secondItem="Eeq-3S-kot" secondAttribute="leading" id="kBn-P8-whD"/>
+                                    <constraint firstItem="0TI-Gs-d5S" firstAttribute="top" secondItem="Eeq-3S-kot" secondAttribute="bottom" constant="8" symbolic="YES" id="pR2-RD-hs8"/>
+                                    <constraint firstItem="0TI-Gs-d5S" firstAttribute="top" secondItem="roW-7A-xT2" secondAttribute="top" id="vQY-pJ-51W"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="fn4-2g-GDj" firstAttribute="top" secondItem="tzE-Nr-JFP" secondAttribute="top" id="Hjh-YX-bze"/>
+                            <constraint firstAttribute="bottom" secondItem="fn4-2g-GDj" secondAttribute="bottom" id="PGv-0a-NNb"/>
+                            <constraint firstItem="fn4-2g-GDj" firstAttribute="leading" secondItem="tzE-Nr-JFP" secondAttribute="leading" id="YzH-E7-tey"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="backgroundScrollView" destination="fn4-2g-GDj" id="s3S-LQ-LOC"/>
