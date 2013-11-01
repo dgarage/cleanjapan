@@ -76,9 +76,11 @@
 - (void)viewWillAppear:(BOOL)animated{
     NSLog(@"viewWillAppear");
     NSLog(@"%@", [[PFUser currentUser] objectForKey:@"username"]);
-    if ([PFAnonymousUtils isLinkedWithUser:[PFUser currentUser]]) {
+    if ([[PFUser currentUser] objectForKey:@"email"] == NULL) {
+        //anonymous user's post
         barButtonItem.title = @"Guest";
-    } else {
+    }else{
+        //not anonymous's post
         barButtonItem.title = [[PFUser currentUser] objectForKey:@"username"];
     }
 }
