@@ -9,7 +9,7 @@
 #import "SubmitViewController.h"
 
 @interface SubmitViewController ()
-- (void)textInputChanged:(NSNotification *)note;
+//- (void)textInputChanged:(NSNotification *)note;
 @end
 
 @implementation SubmitViewController
@@ -49,7 +49,7 @@
     installation = [PFInstallation currentInstallation];
     [installation saveInBackground];
 //    commentBarButtonItem.enabled = NO;
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textInputChanged:) name:UITextViewTextDidChangeNotification object:textView];
+//	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textInputChanged:) name:UITextViewTextDidChangeNotification object:textView];
 }
 
 
