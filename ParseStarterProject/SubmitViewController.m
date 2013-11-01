@@ -48,7 +48,7 @@
     [textView becomeFirstResponder];
     installation = [PFInstallation currentInstallation];
     [installation saveInBackground];
-    button.enabled = NO;
+//    commentBarButtonItem.enabled = NO;
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textInputChanged:) name:UITextViewTextDidChangeNotification object:textView];
 }
 
@@ -73,12 +73,9 @@
     UIDevice *device = [[UIDevice alloc] init];
     NSLog(@"%@", [device.identifierForVendor UUIDString]);
     [post setObject:[NSString stringWithFormat:@"%@", [device.identifierForVendor UUIDString]] forKey:@"identifierForVendor"];
-    
-    
-    ///test
+
     PFUser *user = [PFUser currentUser];
     [post setObject:user forKey:@"user"];
-    //test
     
     [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
@@ -88,18 +85,18 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (BOOL)shouldEnableDoneButton {
-	BOOL enableDoneButton = NO;
-	if (textView.text != nil &&
-		textView.text.length > 0) {
-		enableDoneButton = YES;
-	}
-	return enableDoneButton;
-}
+//- (BOOL)shouldEnableDoneButton {
+//	BOOL enableDoneButton = NO;
+//	if (textView.text != nil &&
+//		textView.text.length > 0) {
+//		enableDoneButton = YES;
+//	}
+//	return enableDoneButton;
+//}
 
-- (void)textInputChanged:(NSNotification *)note {
-    button.enabled = [self shouldEnableDoneButton];
-}
+//- (void)textInputChanged:(NSNotification *)note {
+//    commentBarButtonItem.enabled = [self shouldEnableDoneButton];
+//}
 
 - (void)didReceiveMemoryWarning
 {

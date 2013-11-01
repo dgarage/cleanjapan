@@ -10,7 +10,6 @@
 #import <Parse/Parse.h>
 @interface SubmitViewController : UIViewController{
     UIImageView *imageView;
-    UIButton *button;
     UITextView *textView;
     PFInstallation *installation;
     UIBarButtonItem *commentBarButtonItem;
