@@ -184,7 +184,8 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     //GPS
     ALAssetsLibrary* assetslibrary = [[ALAssetsLibrary alloc] init];
     
-    SubmitViewController *submitViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"SubmitViewController"];
+//    SubmitViewController *submitViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"SubmitViewController"];
+    SubmitViewController *submitViewController = [[SubmitViewController alloc] init];
     [info objectForKey:UIImagePickerControllerOriginalImage];
     image = [info objectForKey:UIImagePickerControllerOriginalImage];
     [submitViewController setImage:image];

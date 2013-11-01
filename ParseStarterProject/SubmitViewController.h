@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 @interface SubmitViewController : UIViewController{
-    IBOutlet UIImageView *imageView;
-    IBOutlet UIButton *button;
-    IBOutlet UITextView *textView;
+    UIImageView *imageView;
+    UIButton *button;
+    UITextView *textView;
     PFInstallation *installation;
+    UIBarButtonItem *commentBarButtonItem;
+    UIScrollView *backgroundScrollView;
 }
 @property(nonatomic, retain)UIImage *image;
 @property (nonatomic, strong)PFGeoPoint *geoPoint;

@@ -15,20 +15,36 @@
 @implementation SubmitViewController
 @synthesize image;
 @synthesize geoPoint;
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+//- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+//{
+//    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+//    if (self) {
+//        // Custom initialization
+//    }
+//    return self;
+//}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    self.automaticallyAdjustsScrollViewInsets = false;
+    //set backgroundScrollView
+    backgroundScrollView = [[UIScrollView alloc] initWithFrame:[self.view bounds]];
+    backgroundScrollView.backgroundColor = [UIColor whiteColor];
+    backgroundScrollView.contentSize = self.view.bounds.size;
+    [self.view addSubview:backgroundScrollView];
+    //set imageView
+    imageView = [[UIImageView alloc] initWithFrame:CGRectMake(110, 80, 100, 100)];
     imageView.image = image;
+    [self.view addSubview:imageView];
+    //set textView
+    textView = [[UITextView alloc] initWithFrame:CGRectMake(10, 200, 300, 100)];
+    textView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:textView];
+    //set commentBarButtonItem
+    commentBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Post" style:UIBarButtonItemStylePlain target:self action:@selector(submit)];
+    self.navigationItem.rightBarButtonItem = commentBarButtonItem;
+    
     [textView becomeFirstResponder];
     installation = [PFInstallation currentInstallation];
     [installation saveInBackground];
@@ -37,7 +53,7 @@
 }
 
 
-- (IBAction)submit{
+- (void)submit{
     //post
     NSLog(@"posting data to perse.com.....");
     //    NSLog(@"LAT:%f LON:%f", location.coordinate.latitude, location.coordinate.longitude);
