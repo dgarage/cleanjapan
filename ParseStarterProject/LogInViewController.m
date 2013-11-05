@@ -72,6 +72,10 @@
     // Set field text color
     [self.logInView.usernameField setTextColor:[UIColor colorWithRed:135.0f/255.0f green:118.0f/255.0f blue:92.0f/255.0f alpha:1.0]];
     [self.logInView.passwordField setTextColor:[UIColor colorWithRed:135.0f/255.0f green:118.0f/255.0f blue:92.0f/255.0f alpha:1.0]];
+    
+    //set label
+    self.logInView.signUpLabel.text = NSLocalizedString(@"signUpLabel", @"");
+    [self.logInView.logInButton  setTitle:NSLocalizedString(@"log in", @"") forState:UIControlStateNormal];
 }
 
 - (void)viewDidLayoutSubviews {

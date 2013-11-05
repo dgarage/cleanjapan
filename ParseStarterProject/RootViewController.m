@@ -70,6 +70,8 @@
     //keychain reset
 //    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"cleanjapan" accessGroup:nil];
 //    [keychainItem resetKeychainItem];
+    NSLog(NSLocalizedString(@"post", @""));
+    [button setTitle:NSLocalizedString(@"post", @"") forState:UIControlStateNormal];
     [self queryForAllPostsNearLocation:locationManager.location];
 }
 
@@ -78,7 +80,7 @@
     NSLog(@"%@", [[PFUser currentUser] objectForKey:@"username"]);
     if ([[PFUser currentUser] objectForKey:@"email"] == NULL) {
         //anonymous user's post
-        barButtonItem.title = @"Guest";
+        [barButtonItem setTitle:NSLocalizedString(@"guest", @"")];
     }else{
         //not anonymous's post
         barButtonItem.title = [[PFUser currentUser] objectForKey:@"username"];
@@ -105,11 +107,11 @@
     // アクションシートを作る
     UIActionSheet*  sheet;
     sheet = [[UIActionSheet alloc]
-             initWithTitle:@"Select Source Type"
+             initWithTitle:NSLocalizedString(@"select source type", @"")
              delegate:self
-             cancelButtonTitle:@"Cancel"
+             cancelButtonTitle:NSLocalizedString(@"cancel", @"")
              destructiveButtonTitle:nil
-             otherButtonTitles:@"Photo Library", @"Camera", @"Saved Photos", nil];
+             otherButtonTitles:NSLocalizedString(@"photo library", @""), NSLocalizedString(@"camera", @""), NSLocalizedString(@"saved photo", @""), nil];
     // アクションシートを表示する
     [sheet showInView:self.view];
 }
@@ -181,6 +183,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    NSLog(@"didFinishPickingMediaWithInfo");
     //GPS
     ALAssetsLibrary* assetslibrary = [[ALAssetsLibrary alloc] init];
     
@@ -203,6 +206,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
                       failureBlock: ^(NSError *err) {
                       }];
     }else{
+        NSLog(@"source type: camera");
         photoLatitude = locationManager.location.coordinate.latitude;
         photoLongitude = locationManager.location.coordinate.longitude;
         PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:photoLatitude longitude:photoLongitude];

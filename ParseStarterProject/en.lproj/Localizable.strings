@@ -1,0 +1,19 @@
+/* 
+  Localizable.strings
+  Clean Japan
+
+  Created by 藤賀 雄太 on 11/5/13.
+
+*/
+// "Key" = "Value"で書いておく。
+"guest" = "Guest";
+"post" = "Post";
+//action sheet
+"select source type" = "Select Source Type";
+"photo library" = "Photo Libarary";
+"camera" = "Camera";
+"saved photo" = "Saved Photo";
+"cancel" = "Cancel";
+"comment" = "Comment";
+"signUpLabel" = "Don't have an account yet";
+"log in" = "Log in";

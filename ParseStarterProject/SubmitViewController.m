@@ -42,7 +42,7 @@
     textView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:textView];
     //set commentBarButtonItem
-    commentBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Post" style:UIBarButtonItemStylePlain target:self action:@selector(submit)];
+    commentBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"post", @"") style:UIBarButtonItemStylePlain target:self action:@selector(submit)];
     self.navigationItem.rightBarButtonItem = commentBarButtonItem;
     
     [textView becomeFirstResponder];

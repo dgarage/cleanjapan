@@ -29,6 +29,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [commentButton setTitle:NSLocalizedString(@"comment", @"") forState:UIControlStateNormal];
     NSLog(@"annotation objectID: %@", [annotation.object objectId]);
     self.automaticallyAdjustsScrollViewInsets = false;
     tableHeaderViewTextView.text = [NSString stringWithFormat:@"%@", [annotation.object objectForKey:@"title"]];
