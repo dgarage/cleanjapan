@@ -38,13 +38,13 @@
     imageView.image = image;
     [self.view addSubview:imageView];
     //set textView
-    textView = [[UITextView alloc] initWithFrame:CGRectMake(10, 200, 300, 100)];
+    textView = [[UITextView alloc] initWithFrame:CGRectMake(10, 196, 300, 100)];
+    [textView setFont:[UIFont systemFontOfSize:16]];
     textView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:textView];
     //set commentBarButtonItem
     commentBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"post", @"") style:UIBarButtonItemStylePlain target:self action:@selector(submit)];
     self.navigationItem.rightBarButtonItem = commentBarButtonItem;
-    
     [textView becomeFirstResponder];
     installation = [PFInstallation currentInstallation];
     [installation saveInBackground];

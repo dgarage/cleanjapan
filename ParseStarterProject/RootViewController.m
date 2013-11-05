@@ -214,6 +214,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
         [submitViewController setGeoPoint:geoPoint];
     }
     NSLog(@"push");
+    picker.navigationBarHidden = false;
     [picker pushViewController:submitViewController animated:YES];
 }
 
