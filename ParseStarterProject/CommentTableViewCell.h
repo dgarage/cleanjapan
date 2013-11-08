@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import "Identicon.h"
 @interface CommentTableViewCell : UITableViewCell{
     UIImageView *userIconImageView;
     UILabel *userNameLabel;

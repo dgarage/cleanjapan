@@ -66,6 +66,7 @@
 		B28A7ECF18064E1E00E8FDE7 /* Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = B28A7ECE18064E1E00E8FDE7 /* Annotation.m */; };
 		B28A7ED5180696E000E8FDE7 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B28A7ED4180696E000E8FDE7 /* DetailViewController.m */; };
 		B29689DF1828B13500218302 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B29689E11828B13500218302 /* Localizable.strings */; };
+		B2EC451D182CD16300802584 /* Identicon.m in Sources */ = {isa = PBXBuildFile; fileRef = B2EC451C182CD16300802584 /* Identicon.m */; };
 		C4C51B571613CE0800959FDC /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = C4C51B541613CE0800959FDC /* Default.png */; };
 		C4C51B581613CE0800959FDC /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C4C51B551613CE0800959FDC /* Default-568h@2x.png */; };
 		C4C51B591613CE0800959FDC /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C4C51B561613CE0800959FDC /* Default@2x.png */; };
@@ -153,6 +154,8 @@
 		B29689DC1828AF8600218302 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B29689E01828B13500218302 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B29689E21828B13900218302 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B2EC451B182CD16300802584 /* Identicon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Identicon.h; sourceTree = "<group>"; };
+		B2EC451C182CD16300802584 /* Identicon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Identicon.m; sourceTree = "<group>"; };
 		C4C51B541613CE0800959FDC /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		C4C51B551613CE0800959FDC /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		C4C51B561613CE0800959FDC /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
@@ -231,6 +234,8 @@
 		09ABC07713A1D52D009C3FCF /* ParseStarterProject */ = {
 			isa = PBXGroup;
 			children = (
+				B2EC451B182CD16300802584 /* Identicon.h */,
+				B2EC451C182CD16300802584 /* Identicon.m */,
 				B23AB4E9181109D3007E1BB8 /* Reachability.h */,
 				B23AB4EA181109D3007E1BB8 /* Reachability.m */,
 				B23AB4E51810F007007E1BB8 /* KeychainItemWrapper.h */,
@@ -437,6 +442,7 @@
 				09ABC08213A1D52D009C3FCF /* ParseStarterProjectAppDelegate.m in Sources */,
 				B24237F717FBF52F0030F468 /* RootViewController.m in Sources */,
 				B211EC69181A3AD600B53B40 /* PhotoViewController.m in Sources */,
+				B2EC451D182CD16300802584 /* Identicon.m in Sources */,
 				B211EC66181A2F7700B53B40 /* CommentTableViewCell.m in Sources */,
 				B28A7ED5180696E000E8FDE7 /* DetailViewController.m in Sources */,
 				B23AB4E71810F007007E1BB8 /* KeychainItemWrapper.m in Sources */,

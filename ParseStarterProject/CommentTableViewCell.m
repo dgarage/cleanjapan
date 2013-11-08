@@ -81,20 +81,7 @@
 
 - (void)setupCommentObject:(PFObject *)commentObject
 {
-    int random = arc4random_uniform(3);
-    switch (random) {
-        case 0:
-            userIconImageView.image = [UIImage imageNamed:@"dummy_img1.png"];
-            break;
-        case 1:
-            userIconImageView.image = [UIImage imageNamed:@"dummy_img2.png"];
-            break;
-        case 2:
-            userIconImageView.image = [UIImage imageNamed:@"dummy_img3.png"];
-            break;
-        default:
-            break;
-    }
+    userIconImageView.image = [Identicon identiconWithString:[[commentObject objectForKey:@"user"] objectId] size:CGSizeMake(STUserIconSize, STUserIconSize)];
     //check the post was by anonymous or not
     if ([[commentObject objectForKey:@"user"] objectForKey:@"email"] == NULL) {
         //anonymous user's post
