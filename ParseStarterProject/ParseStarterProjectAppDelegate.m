@@ -9,7 +9,15 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // ****************************************************************************
     // Uncomment and fill in with your Parse credentials:
-    [Parse setApplicationId:@"gqDOBWUwdeg0JKBu5AaeVPuTiOIG5mAumFYz3S1n" clientKey:@"NWkIqcXvsqX1DS8W8gu3x5e83zP1g0Qt8nYV7bOW"];
+    NSError *error = nil;
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"config" ofType:@"txt"];
+    NSString *fileContents = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
+    NSArray *allLinedStrings = [fileContents componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    if (!error) {
+        [Parse setApplicationId:[allLinedStrings objectAtIndex:1] clientKey:[allLinedStrings objectAtIndex:3]];
+    }else{
+        NSLog(@"error!: can't read config.txt. Import config.txt\n\napplicationId\nxxxx\nclientKey\nxxxx\n\n to this project or set application id and client key like this: [Parse setApplicationId:\"xxxx\" clientKey:@\"xxxx\"]");
+    }
     //
     // If you are using Facebook, uncomment and add your FacebookAppID to your bundle's plist as
     // described here: https://developers.facebook.com/docs/getting-started/facebook-sdk-for-ios/

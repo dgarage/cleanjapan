@@ -47,6 +47,7 @@
 		B24237F417FBF0EA0030F468 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B24237F317FBF0EA0030F468 /* Storyboard.storyboard */; };
 		B24237F717FBF52F0030F468 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B24237F617FBF52F0030F468 /* RootViewController.m */; };
 		B24237F917FBF7E10030F468 /* hero.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B24237F817FBF7E10030F468 /* hero.jpg */; };
+		B24FE81A1831FFC1002C8B89 /* config.txt in Resources */ = {isa = PBXBuildFile; fileRef = B24FE8191831FFC1002C8B89 /* config.txt */; };
 		B27A93D21820F6BE001E0A76 /* dummy_img1.png in Resources */ = {isa = PBXBuildFile; fileRef = B27A93CF1820F6BE001E0A76 /* dummy_img1.png */; };
 		B27A93D31820F6BE001E0A76 /* dummy_img2.png in Resources */ = {isa = PBXBuildFile; fileRef = B27A93D01820F6BE001E0A76 /* dummy_img2.png */; };
 		B27A93D41820F6BE001E0A76 /* dummy_img3.png in Resources */ = {isa = PBXBuildFile; fileRef = B27A93D11820F6BE001E0A76 /* dummy_img3.png */; };
@@ -131,6 +132,7 @@
 		B24237F517FBF52F0030F468 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		B24237F617FBF52F0030F468 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		B24237F817FBF7E10030F468 /* hero.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = hero.jpg; sourceTree = "<group>"; };
+		B24FE8191831FFC1002C8B89 /* config.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = config.txt; sourceTree = "<group>"; };
 		B27A93CF1820F6BE001E0A76 /* dummy_img1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dummy_img1.png; sourceTree = "<group>"; };
 		B27A93D01820F6BE001E0A76 /* dummy_img2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dummy_img2.png; sourceTree = "<group>"; };
 		B27A93D11820F6BE001E0A76 /* dummy_img3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dummy_img3.png; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 		09ABC07813A1D52D009C3FCF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B24FE8191831FFC1002C8B89 /* config.txt */,
 				B27A93DB1820F730001E0A76 /* App Icon */,
 				B27A93CE1820F699001E0A76 /* User Icon */,
 				B27A93CD1820F67D001E0A76 /* Launch Images */,
@@ -419,6 +422,7 @@
 				B27A93D61820F71A001E0A76 /* Default-568h@2x.png in Resources */,
 				C4C51B581613CE0800959FDC /* Default-568h@2x.png in Resources */,
 				B27A93D91820F726001E0A76 /* Default.png in Resources */,
+				B24FE81A1831FFC1002C8B89 /* config.txt in Resources */,
 				B27A93F31820F969001E0A76 /* 80.png in Resources */,
 				C4C51B591613CE0800959FDC /* Default@2x.png in Resources */,
 				B23AB4E31810136E007E1BB8 /* SignUpDown.png in Resources */,
@@ -488,7 +492,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				PROVISIONING_PROFILE = "EE32D21F-AFDB-4645-BB74-D18CE79BB5E2";
+				PROVISIONING_PROFILE = "31D5B4A5-3A22-40E7-9500-5FF70DD3A767";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -505,7 +509,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "EE32D21F-AFDB-4645-BB74-D18CE79BB5E2";
+				PROVISIONING_PROFILE = "31D5B4A5-3A22-40E7-9500-5FF70DD3A767";
 				SDKROOT = iphoneos;
 			};
 			name = Release;
@@ -531,7 +535,7 @@
 				INFOPLIST_FILE = "ParseStarterProject/Clean Japan-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "Clean Japan";
-				PROVISIONING_PROFILE = "EE32D21F-AFDB-4645-BB74-D18CE79BB5E2";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -557,7 +561,7 @@
 				INFOPLIST_FILE = "ParseStarterProject/Clean Japan-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "Clean Japan";
-				PROVISIONING_PROFILE = "EE32D21F-AFDB-4645-BB74-D18CE79BB5E2";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
