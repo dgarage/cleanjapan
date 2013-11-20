@@ -12,18 +12,21 @@
 #import "CommentTableViewCell.h"
 #import "PhotoViewController.h"
 @interface DetailViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UINavigationControllerDelegate>{
-    IBOutlet UIScrollView *backgroundScrollView;
-    IBOutlet UITableView *commentTableView;
-    IBOutlet UITextView *commentTextView;
-    IBOutlet UIButton *tableHeaderViewButton;
-    IBOutlet UITextView *tableHeaderViewTextView;
-    IBOutlet UILabel *tableHeaderViewUserNameLabel;
-    IBOutlet UILabel *tableHeaderViewCreatedAtLabel;
-    IBOutlet UIButton *commentButton;
+    UIScrollView *backgroundScrollView;
+    UITableView *commentTableView;
+    UITextView *commentTextView;
+    UIButton *tableHeaderViewButton;
+    UITextView *tableHeaderViewTextView;
+    UILabel *tableHeaderViewUserNameLabel;
+    UILabel *tableHeaderViewCreatedAtLabel;
+    UIButton *commentButton;
     CommentTableViewCell *getHeightCell;
 }
 - (IBAction)comment;
 - (IBAction)tableHeaderViewButtonTapped;
+
+
+
 @property (nonatomic, retain) Annotation *annotation;
 @property (nonatomic, retain) NSMutableArray *commentObjectArray;
 

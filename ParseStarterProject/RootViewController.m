@@ -345,7 +345,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
     Annotation *annotation = (Annotation*)view.annotation;
     NSLog(@"annotation comment:%f", annotation.coordinate.latitude);
     NSLog(@"annotation objectID: %@", [annotation.object objectId]);
-    DetailViewController *detailViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"DetailViewController"];
+    DetailViewController *detailViewController = [[DetailViewController alloc] init];
     [detailViewController setAnnotation:(annotation)];
     [[self navigationController] pushViewController:detailViewController animated:YES];
 }

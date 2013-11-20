@@ -158,4 +158,53 @@
     return size;
 }
 
++ (CGSize)sizeThatFits:(CGSize)size userIconViewFrame:(UIImageView *)userIconImageView userNameLabel:(UILabel*)userNameLabel commentLabel:(UILabel*)commentLabel createdAtLabel:(UILabel*)createdAtLabel withLayout:(BOOL)withLayout{
+    
+    CGRect userIconViewFrame;
+    userIconViewFrame.origin.x = STMargin;
+    userIconViewFrame.origin.y = STMargin;
+    userIconViewFrame.size.width = STUserIconSize;
+    userIconViewFrame.size.height = STUserIconSize;
+    if (withLayout) {
+        userIconImageView.frame = userIconViewFrame;
+    }
+    CGFloat minHeight = userIconViewFrame.origin.y + userIconViewFrame.size.height + STMargin;
+    
+    CGRect usernameLabelFrame;
+    usernameLabelFrame.origin.x = userIconViewFrame.origin.x + userIconViewFrame.size.width + STMargin;
+    usernameLabelFrame.origin.y = STMargin;
+    usernameLabelFrame.size.width = size.width - usernameLabelFrame.origin.x - STMargin;
+    usernameLabelFrame.size.height = size.height - usernameLabelFrame.origin.y;
+    usernameLabelFrame.size = [userNameLabel sizeThatFits:usernameLabelFrame.size];
+    if (withLayout) {
+        userNameLabel.frame = usernameLabelFrame;
+    }
+    
+    CGRect statusLabelFrame;
+    statusLabelFrame.origin.x = usernameLabelFrame.origin.x;
+    statusLabelFrame.origin.y = usernameLabelFrame.origin.y + usernameLabelFrame.size.height;
+    statusLabelFrame.size.width = size.width - statusLabelFrame.origin.x - STMargin;
+    statusLabelFrame.size.height = size.height - statusLabelFrame.origin.y;
+    statusLabelFrame.size = [commentLabel sizeThatFits:statusLabelFrame.size];
+    if (withLayout) {
+        commentLabel.frame = statusLabelFrame;
+    }
+    
+    CGRect createdAtLabelFrame;
+    createdAtLabelFrame.origin.x = statusLabelFrame.origin.x;
+    createdAtLabelFrame.origin.y = statusLabelFrame.origin.y + statusLabelFrame.size.height;
+    createdAtLabelFrame.size.width = size.width - createdAtLabelFrame.origin.x  - STMargin;
+    createdAtLabelFrame.size.height = size.height - createdAtLabelFrame.origin.y;
+    createdAtLabelFrame.size = [createdAtLabel sizeThatFits:createdAtLabelFrame.size];
+    if (withLayout) {
+        createdAtLabel.frame = createdAtLabelFrame;
+    }
+    
+    size.height = createdAtLabelFrame.origin.y + createdAtLabelFrame.size.height + STMargin;
+    if (size.height < minHeight) {
+        size.height = minHeight;
+    }
+    return size;
+}
+
 @end

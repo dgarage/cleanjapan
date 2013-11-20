@@ -16,4 +16,5 @@
     UILabel *createdAtLabel;
 }
 - (void)setupCommentObject:(PFObject *)commentObject;
++ (CGSize)sizeThatFits:(CGSize)size userIconViewFrame:(UIImageView *)userIconImageView userNameLabel:(UILabel*)userNameLabel commentLabel:(UILabel*)commentLabel createdAtLabel:(UILabel*)createdAtLabel withLayout:(BOOL)withLayout;
 @end

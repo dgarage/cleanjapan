@@ -5,6 +5,7 @@
 //  Created by 藤賀 雄太 on 10/10/13.
 //
 //
+#define UserIconSize 48
 
 #import "DetailViewController.h"
 
@@ -29,10 +30,58 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [commentButton setTitle:NSLocalizedString(@"comment", @"") forState:UIControlStateNormal];
-    NSLog(@"annotation objectID: %@", [annotation.object objectId]);
     self.automaticallyAdjustsScrollViewInsets = false;
+    
+//    //background scrollview
+//    CGSize screenSize = [[UIScreen mainScreen] bounds].size;
+    //background scroll view
+    backgroundScrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+    backgroundScrollView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:backgroundScrollView];
+    
+    int marginTop = [UIApplication sharedApplication].statusBarFrame.size.height+self.navigationController.navigationBar.bounds.size.height;
+    
+    //commetButton
+    CGSize commentButtonSize = CGSizeMake(60, 40);
+    commentButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    commentButton.frame = CGRectMake(self.view.bounds.size.width-commentButtonSize.width, self.view.bounds.size.height-commentButtonSize.height, commentButtonSize.width, commentButtonSize.height);
+    commentButton.titleLabel.font = [UIFont systemFontOfSize:12];
+    commentButton.backgroundColor = [UIColor lightGrayColor];
+    [commentButton addTarget:self action:@selector(comment) forControlEvents:UIControlEventTouchUpInside];
+    
+    //commentTextView
+    int commentTextViewHeight = commentButtonSize.height;
+    commentTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height-commentTextViewHeight, self.view.bounds.size.width-commentButtonSize.width, commentTextViewHeight)];
+    commentTextView.layer.borderWidth = 1.0f;
+    commentTextView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    commentTextView.backgroundColor = [UIColor whiteColor];
+    [backgroundScrollView addSubview:commentButton];
+    [backgroundScrollView addSubview:commentTextView];
+    
+
+    //tableView
+    commentTableView = [[UITableView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, marginTop+self.view.bounds.origin.y,  self.view.bounds.size.width, self.view.bounds.size.height-commentTextView.frame.size.height-marginTop) style:UITableViewStylePlain];
+    commentTableView.backgroundColor = [UIColor whiteColor];
+    
+    //**** Table Header View ********
+    int tableHeaderViewLabelHeight = 30;
+    //- tableHeaderViewUserNameLabel
+    tableHeaderViewUserNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, tableHeaderViewLabelHeight)];
+    tableHeaderViewUserNameLabel.font = [UIFont boldSystemFontOfSize:16.0f];
+    //- tableHeaderViewTextView
+    int tableHeaderViewTextViewHeight = 30;
+    tableHeaderViewTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, tableHeaderViewUserNameLabel.bounds.size.height, self.view.bounds.size.width, tableHeaderViewTextViewHeight)];
+    tableHeaderViewTextView.font = [UIFont systemFontOfSize:16.0f];
+    //- tableHeaderViewCreatedAtLabel
+    int tableHeaderViewCreatedAtLabelHeight = 30;
+    tableHeaderViewCreatedAtLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, tableHeaderViewUserNameLabel.bounds.size.height+tableHeaderViewTextView.bounds.size.height, self.view.bounds.size.width, tableHeaderViewCreatedAtLabelHeight)];
+    tableHeaderViewCreatedAtLabel.font = [UIFont systemFontOfSize:14.0f];
+    //- tableHeaderViewButton
     tableHeaderViewTextView.text = [NSString stringWithFormat:@"%@", [annotation.object objectForKey:@"title"]];
+    tableHeaderViewButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    tableHeaderViewButton.frame = CGRectMake(0, tableHeaderViewUserNameLabel.bounds.size.height+tableHeaderViewTextView.bounds.size.height+tableHeaderViewCreatedAtLabel.bounds.size.height, self.view.bounds.size.width, self.view.bounds.size.width);
+    [tableHeaderViewButton addTarget:self action:@selector(tableHeaderViewButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    
     PFFile *imageFile = [annotation.object objectForKey:@"image"];
     [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!error) {
@@ -48,6 +97,34 @@
         //not anonymous's post
         tableHeaderViewUserNameLabel.text = [[annotation.object objectForKey:@"user"] objectForKey:@"username"];
     }
+    
+    
+    UIView * tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, tableHeaderViewButton.bounds.size.height+tableHeaderViewUserNameLabel.bounds.size.height+tableHeaderViewTextView.bounds.size.height+tableHeaderViewCreatedAtLabel.bounds.size.height)];
+    tableHeaderView.backgroundColor = [UIColor whiteColor];
+    
+    [tableHeaderView addSubview:tableHeaderViewUserNameLabel];
+    [tableHeaderView addSubview:tableHeaderViewTextView];
+    [tableHeaderView addSubview:tableHeaderViewCreatedAtLabel];
+    [tableHeaderView addSubview:tableHeaderViewButton];
+    
+    UIImageView *userIconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+    [tableHeaderView addSubview:userIconImageView];
+
+    UIImage *identicon = [Identicon identiconWithString:[[annotation.object objectForKey:@"user"] objectId] size:CGSizeMake(UserIconSize, UserIconSize)];
+    userIconImageView.image = identicon;
+    
+    
+//    
+//    [CommentTableViewCell sizeThatFits:CGSizeMake(tableHeaderView.bounds.size.width, tableHeaderView.bounds.size.height-tableHeaderViewButton.bounds.size.height) userIconViewFrame:userIconImageView userNameLabel:tableHeaderViewUserNameLabel commentLabel:tableHeaderViewUserNameLabel createdAtLabel:tableHeaderViewCreatedAtLabel withLayout:YES];
+    
+    //comment table view
+    [commentTableView setTableHeaderView:tableHeaderView];
+    [backgroundScrollView addSubview:commentTableView];
+    
+    
+    [commentButton setTitle:NSLocalizedString(@"comment", @"") forState:UIControlStateNormal];
+
+    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm"];
     NSDate *date = [annotation.object createdAt];
@@ -95,7 +172,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
-    CommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    CommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (nil == cell){
         cell = [[CommentTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
@@ -256,7 +333,8 @@
 
 -(IBAction)tableHeaderViewButtonTapped{
     NSLog(@"photo show");
-    PhotoViewController *photoViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"PhotoViewController"];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Storyboard" bundle:nil];
+    PhotoViewController *photoViewController = [storyboard instantiateViewControllerWithIdentifier:@"PhotoViewController"];
     [photoViewController setObject:annotation.object];
     [[self navigationController] pushViewController:photoViewController animated:YES];
 }
