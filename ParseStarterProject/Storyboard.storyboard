@@ -67,25 +67,6 @@
             </objects>
             <point key="canvasLocation" x="-324" y="-534"/>
         </scene>
-        <!--Detail View Controller-->
-        <scene sceneID="q8T-NL-0dv">
-            <objects>
-                <viewController storyboardIdentifier="DetailViewController" id="vA0-5V-K2m" customClass="DetailViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="eMk-r2-Wha"/>
-                        <viewControllerLayoutGuide type="bottom" id="eih-Bf-dib"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="tzE-Nr-JFP">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MGR-ie-z6l" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-324" y="164"/>
-        </scene>
         <!--Photo View Controller-->
         <scene sceneID="odK-Js-dfD">
             <objects>
