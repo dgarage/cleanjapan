@@ -9,6 +9,9 @@ static NSString * const kPAWParseUsernameKey = @"username";
 // UI strings:
 static NSString * const kPAWWallCantViewPost = @"Can’t view post! Get closer.";
 
+#define USER_ICON_SIZE 48
+#define MARGIN 8
+
 @class ParseStarterProjectViewController;
 
 @interface ParseStarterProjectAppDelegate : NSObject <UIApplicationDelegate> {

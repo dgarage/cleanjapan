@@ -16,7 +16,7 @@
     UITableView *commentTableView;
     UITextView *commentTextView;
     UIButton *tableHeaderViewButton;
-    UITextView *tableHeaderViewTextView;
+    UILabel *tableHeaderViewCommentLabel;
     UILabel *tableHeaderViewUserNameLabel;
     UILabel *tableHeaderViewCreatedAtLabel;
     UIButton *commentButton;

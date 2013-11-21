@@ -175,7 +175,9 @@
     usernameLabelFrame.origin.y = STMargin;
     usernameLabelFrame.size.width = size.width - usernameLabelFrame.origin.x - STMargin;
     usernameLabelFrame.size.height = size.height - usernameLabelFrame.origin.y;
+    NSLog(@"delete me:%f", usernameLabelFrame.size.height);
     usernameLabelFrame.size = [userNameLabel sizeThatFits:usernameLabelFrame.size];
+    NSLog(@"delete me:%f", usernameLabelFrame.size.height);
     if (withLayout) {
         userNameLabel.frame = usernameLabelFrame;
     }
