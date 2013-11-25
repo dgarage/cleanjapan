@@ -31,3 +31,4 @@
 "usernameField.placeholder" = "ユーザーネーム";
 "passwordField.placeholder" = "パスワード";
 "emailField.placeholder" = "メールアドレス";
+"No title" = "タイトルなし";

@@ -62,7 +62,12 @@
     PFFile *imageFile = [PFFile fileWithName:@"image.jpg" data:imageData];
     PFObject *post = [PFObject objectWithClassName:@"Post"];
     [post setObject:imageFile forKey:@"image"];
-    [post setObject:textView.text forKey:@"title"];
+    NSString *title = textView.text;
+    title = [title stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if ([title isEqualToString:@""]) {
+        title = NSLocalizedString(@"No title", @"");
+    }
+    [post setObject:title forKey:@"title"];
     [post setObject:[NSNumber numberWithDouble:geoPoint.latitude] forKey:@"latitude"];
     [post setObject:[NSNumber numberWithDouble:geoPoint.longitude] forKey:@"longitude"];
     [post setObject:[PFGeoPoint geoPointWithLatitude:geoPoint.latitude longitude:geoPoint.longitude] forKey:@"location"];
