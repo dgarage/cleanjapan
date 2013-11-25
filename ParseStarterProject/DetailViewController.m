@@ -284,6 +284,7 @@
 
 -(IBAction)comment{
     NSLog(@"comment: %@", commentTextView.text);
+    commentButton.enabled = false;
     PFObject *comment = [PFObject objectWithClassName:@"Comment"];
     [comment setObject:commentTextView.text forKey:@"comment"];
     PFUser *user = [PFUser currentUser];
@@ -293,7 +294,6 @@
         if (succeeded) {
             NSLog(@"comment upload done!");
             [commentTextView setText:@""];
-            commentButton.enabled = false;
             [self dismissKeyboard];
             [self retrieveComment];
         }
@@ -363,7 +363,7 @@
     NSLog(@"textView.contentSize.height: %f", textView.contentSize.height);
 //    [textView setFrame:CGRectMake(textView.frame.origin.x, 300-textView.contentSize.height, 320, textView.contentSize.height)];
     
-    NSString *trimmedComment = [commentTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSString *trimmedComment = [commentTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSLog(@"len: %d", trimmedComment.length);
     if (trimmedComment.length != 0){
         commentButton.enabled = true;
