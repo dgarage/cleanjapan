@@ -94,6 +94,7 @@
     int tableHeaderViewCreatedAtLabelHeight = 30;
     tableHeaderViewCreatedAtLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, tableHeaderViewUserNameLabel.bounds.size.height+tableHeaderViewCommentLabel.bounds.size.height, self.view.bounds.size.width, tableHeaderViewCreatedAtLabelHeight)];
     tableHeaderViewCreatedAtLabel.font = [UIFont systemFontOfSize:14.0f];
+    tableHeaderViewCreatedAtLabel.textColor = [UIColor grayColor];
     tableHeaderViewCreatedAtLabel.backgroundColor = [UIColor whiteColor];
 
     //- tableHeaderViewCreatedAtLabel

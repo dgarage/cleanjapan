@@ -52,17 +52,17 @@
     layer.shadowOpacity = 0.0f;
     layer = self.signUpView.emailField.layer;
     layer.shadowOpacity = 0.0f;
-    layer = self.signUpView.additionalField.layer;
-    layer.shadowOpacity = 0.0f;
+
     
     // Set text color
     [self.signUpView.usernameField setTextColor:[UIColor colorWithRed:135.0f/255.0f green:118.0f/255.0f blue:92.0f/255.0f alpha:1.0]];
     [self.signUpView.passwordField setTextColor:[UIColor colorWithRed:135.0f/255.0f green:118.0f/255.0f blue:92.0f/255.0f alpha:1.0]];
     [self.signUpView.emailField setTextColor:[UIColor colorWithRed:135.0f/255.0f green:118.0f/255.0f blue:92.0f/255.0f alpha:1.0]];
-    [self.signUpView.additionalField setTextColor:[UIColor colorWithRed:135.0f/255.0f green:118.0f/255.0f blue:92.0f/255.0f alpha:1.0]];
     
-    // Change "Additional" to match our use
-    [self.signUpView.additionalField setPlaceholder:@"Phone number"];    
+    // Set placeholder
+    self.signUpView.usernameField.placeholder = NSLocalizedString(@"usernameField.placeholder", @"");
+    self.signUpView.passwordField.placeholder = NSLocalizedString(@"passwordField.placeholder", @"");
+    self.signUpView.emailField.placeholder = NSLocalizedString(@"emailField.placeholder", @"");
 }
 
 - (void)viewDidLayoutSubviews {
@@ -118,7 +118,11 @@
     }
     
     if (!informationComplete) {
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Missing Information", nil) message:NSLocalizedString(@"Make sure you fill out all of the information!", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Missing Information.", nil)
+                                    message:NSLocalizedString(@"Make sure you fill out all of the information.", nil)
+                                   delegate:nil
+                          cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                          otherButtonTitles:nil] show];
     }
     
     return informationComplete;

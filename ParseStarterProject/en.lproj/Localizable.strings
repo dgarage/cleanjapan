@@ -17,3 +17,17 @@
 "comment" = "Comment";
 "signUpLabel" = "Don't have an account yet";
 "log in" = "Log in";
+"Missing Information." = "Missing Information";
+"Missing information is password" ="Missing Information";
+"Missing information is username" = "Missing Information";
+"Missing information is username and password" = "Missing Information";
+"Make sure you fill out username." = "Make sure you fill out username.";
+"Make sure you fill out password." = "Make sure you fill out password.";
+"Make sure you fill out all of the information." = "Make sure you fill out all of the information.";
+"Connection error." = "Connection error.";
+"Please connect the internet." = "Please connect the internet.";
+"Login failed." = "Login failed.";
+"Please Retry." = "Please Retry.";
+"usernameField.placeholder" = "Username";
+"passwordField.placeholder" = "Password";
+"emailField.placeholder" = "Email";

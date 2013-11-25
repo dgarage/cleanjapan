@@ -17,3 +17,17 @@
 "comment" = "コメント";
 "signUpLabel" = "まだアカウントを持っていない場合";
 "log in" = "ログイン";
+"Missing Information." = "エラー";
+"Missing information is password" ="エラー";
+"Missing information is username" = "エラー";
+"Missing information is username and password" = "エラー";
+"Make sure you fill out username." = "ユーザネームを入力してください。";
+"Make sure you fill out password." = "パスワードを入力して下さい。";
+"Make sure you fill out all of the information." = "すべての項目を入力してください。";
+"Connection error." = "エラー";
+"Please connect the internet." = "インターネットに接続してください。";
+"Login failed." = "エラー";
+"Please Retry." = "ログインに失敗しました。";
+"usernameField.placeholder" = "ユーザーネーム";
+"passwordField.placeholder" = "パスワード";
+"emailField.placeholder" = "メールアドレス";

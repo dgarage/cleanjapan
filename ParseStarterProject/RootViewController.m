@@ -63,7 +63,10 @@
     }else{
         //off line
         //message
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"AletTest2" message:@"Please connect the internet." delegate:self cancelButtonTitle:@"OK, Retry" otherButtonTitles:nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Connection error.", @"")
+                                                            message:NSLocalizedString(@"Please connect the internet.", @"") delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
         alertView.tag = ALERT_CONNECT_ERROR;
         [alertView show];
     }
@@ -410,7 +413,11 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
                                                 if (error) {
                                                     NSLog(@"Anonymous login failed.");
                                                     //message
-                                                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"AlertTest1" message:@"Please Retry." delegate:self cancelButtonTitle:@"Retry" otherButtonTitles:nil];
+                                                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Login failed.", @"")
+                                                                                                        message:NSLocalizedString(@"Please Retry.", @"")
+                                                                                                       delegate:self
+                                                                                              cancelButtonTitle:@"OK"
+                                                                                              otherButtonTitles:nil];
                                                     alertView.tag = ALERT_ANONYMOUS_ERROR;
                                                     [alertView show];
                                                 } else {

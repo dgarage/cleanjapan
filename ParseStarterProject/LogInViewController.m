@@ -76,6 +76,10 @@
     //set label
     self.logInView.signUpLabel.text = NSLocalizedString(@"signUpLabel", @"");
     [self.logInView.logInButton  setTitle:NSLocalizedString(@"log in", @"") forState:UIControlStateNormal];
+    
+    // Set placeholder
+    self.logInView.usernameField.placeholder = NSLocalizedString(@"usernameField.placeholder", @"");
+    self.logInView.passwordField.placeholder = NSLocalizedString(@"passwordField.placeholder", @"");
 }
 
 - (void)viewDidLayoutSubviews {
@@ -98,10 +102,26 @@
 - (BOOL)logInViewController:(PFLogInViewController *)logInController shouldBeginLogInWithUsername:(NSString *)username password:(NSString *)password {
     if (username && password && username.length && password.length) {
         return YES;
+    } else if (password && password.length){
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Missing information is username", nil)
+                                    message:NSLocalizedString(@"Make sure you fill out username.", nil)
+                                   delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                          otherButtonTitles:nil] show];
+        return NO;
+    }else if (username && username.length){
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Missing information is password", nil)
+                                    message:NSLocalizedString(@"Make sure you fill out password.", nil)
+                                   delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                          otherButtonTitles:nil] show];
+        return NO;
+    } else{
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Missing information is username and password", nil)
+                                    message:NSLocalizedString(@"Make sure you fill out all of the information.", nil)
+                                   delegate:nil
+                          cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                          otherButtonTitles:nil] show];
+        return NO;
     }
-    
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Missing Information", nil) message:NSLocalizedString(@"Make sure you fill out all of the information!", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
-    return NO;
 }
 
 // Sent to the delegate when a PFUser is logged in.
